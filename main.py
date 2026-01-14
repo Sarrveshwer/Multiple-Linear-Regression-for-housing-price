@@ -71,7 +71,7 @@ class Logger(object):
 filename = os.path.splitext(os.path.basename(__file__))[0]
 try:
     
-    a=int(input("Test(1) or Not (2)"))
+    a=int(input("Test(1) or Not (2): "))
     if a==1:
         os.mkdir("logs")
     else:
@@ -133,22 +133,29 @@ class model:
         self.m=len(self.y)
         print(self.m)
     def Linear_regression(self):
+        #Making the matrix by adding all the features
         X = self.df[self.feature_names].values
+        #scalling
         scaler_x = StandardScaler()
         X_scaled = scaler_x.fit_transform(X) 
+        #Creating X_biased
         Xb=np.c_[np.ones(self.m),X_scaled]
+        #initialize theta and scale y
         theta = np.ones((Xb.shape[1],1))
         scaler_y = StandardScaler()
         self.y_scaled = scaler_y.fit_transform(self.y.values.reshape(-1, 1)).flatten()
-        alpha=0.01
-        best_epoch=self.m 
-        alpha=0.001 
+        
+        #time for gradient decent
+        initial_alpha = 0.01  
+        decay = 0.001 
+        best_epoch=self.m #this is after testing
         prev_mse = float('inf')
         patience = 5
         counter = 0
 
 
         for i in range(best_epoch):
+            alpha = initial_alpha * (1.0 / (1.0 + decay * i))
             self.y_pred_scaled = (Xb @ theta).reshape(-1) 
             e = self.y_pred_scaled - self.y_scaled
             mse = np.mean(e**2)

@@ -28,7 +28,7 @@ R-Squared: 0.9180
 ![Residual Plot](images/Residual_plot_2026-01-14_19-10-21.png)
 ### Loss Curve
 
-![Loss Curve](/images/loss_curve_2026-01-14_19-10-21.png)
+![Loss Curve](/images/loss_curve_2026-01-14_20-03-17.png)
 
 
 Dataset used for this study:
@@ -38,13 +38,18 @@ Dataset used for this study:
 
 This study evaluated the performance of a custom-built linear regression model on multi-feature housing data.
 
+- **Model Features That Matter**
+    - Area Population
+    - Avg. Area House Age
+    - Avg. Area Income
+    - Avg. Area Number of Rooms
 - **Model Performance**
   - The model achieved a high correlation (R ≈ 0.958) and an R-Squared value of 0.918, indicating that the selected features explain approximately 92% of the variance in housing prices.
   - The use of `StandardScaler` was critical in ensuring the gradient descent algorithm converged efficiently.
   - The Loss Curve demonstrates stable convergence, with the MSE reaching its floor within the allotted epochs.
+  - Uses Learning Rate Decay to find the correct learning rate
 
 - **Key Takeaways and Recommendations**
-  - **Feature Importance:** "Avg. Area Income" and "House Age" remain dominant predictors in this dataset.
   - **Robustness:** The integration of `sys.excepthook` ensures that any runtime failures (e.g., missing data or improper dimensions) are recorded in the logs with full tracebacks.
   - **Visual Verification:** Residual plots should be checked for "homoscedasticity" (consistent variance) to ensure the linear model's assumptions are not violated.
   - **Scaling:** Always ensure target variables are inverse-transformed after prediction to report metrics in original currency units (Price).
