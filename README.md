@@ -24,8 +24,11 @@ mse= 0.08202714761373452
 Model Correlation (R): 0.9581
 R-Squared: 0.9180
 ```
+### Residual Plot
+![Residual Plot](images/Residual_plot_2026-01-14_19-10-21.png)
+### Loss Curve
 
-
+![Loss Curve](/images/loss_curve_2026-01-14_19-10-21.png)
 
 
 Dataset used for this study:
