@@ -1,0 +1,217 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import t
+from sklearn.preprocessing import StandardScaler
+import logging
+import time
+import sys
+import datetime
+import os
+import traceback
+
+
+"""
+FINAL OUTPUT AFTER TESTING
+
+Model Features:
+Area Population
+Avg. Area House Age
+Avg. Area Income
+Avg. Area Number of Rooms
+mse= 0.08202714761373452
+Model Correlation (R): 0.9581
+R-Squared: 0.9180
+"""
+sns.set_style('ticks') 
+#--------------Automatic Logger------------------
+
+
+real_input = input
+
+
+class Logger(object):
+    def __init__(self, filename):
+        self.terminal = sys.stdout
+        self.log = open(filename, "w", encoding="utf-8")
+        self.is_newline = True  
+
+
+    def write(self, message):
+        self.terminal.write(message)
+        
+        if not self.log.closed:
+            for char in message:
+                if self.is_newline and char != '\n':
+                    # add timestamp only at the start of a non-empty line
+                    timestamp = datetime.datetime.now().strftime("[%H:%M:%S] ")
+                    self.log.write(timestamp)
+                    self.is_newline = False
+                
+                self.log.write(char)
+                
+                if char == '\n':
+                    self.is_newline = True
+
+
+    def flush(self):
+        self.terminal.flush()
+        if not self.log.closed:
+            self.log.flush()
+
+
+    def __del__(self):
+        if hasattr(self, 'log') and not self.log.closed:
+            self.log.close()
+
+
+
+
+filename = os.path.splitext(os.path.basename(__file__))[0]
+try:
+    
+    a=int(input("Test(1) or Not (2)"))
+    if a==1:
+        os.mkdir("logs")
+    else:
+        os.mkdir("logs_test")
+    os.mkdir("images")
+except FileExistsError:
+    pass
+except OSError as e:
+    print(f"An error occurred: {e}")
+
+
+safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+if a==1:
+    log_path = os.path.join("logs", f"{filename}@{safe_timestamp}.log")
+else:
+    log_path = os.path.join("logs_test", f"{filename}_test@{safe_timestamp}.log")
+
+sys.stdout = Logger(log_path)
+
+
+def input_and_log(prompt=""):
+    print(prompt, end="", flush=True)
+    answer = real_input()
+    if not sys.stdout.log.closed:
+        sys.stdout.log.write(answer + "\n")
+        sys.stdout.log.flush()
+    return answer
+
+
+input = input_and_log
+
+def handle_exception(exc_type, exc_value, exc_traceback):
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+
+    error_msg = "".join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+    
+    print("\n" + "="*30 + " CRASH DETECTED " + "="*30)
+    print(f"Timestamp: {datetime.datetime.now()}")
+    print(error_msg)
+    print("="*76 + "\n")
+
+sys.excepthook = handle_exception
+#--------------------------MODEL---------------------------
+
+class model:
+    def __init__(self):
+        self.df=None
+        self.feature_names=None
+        self.y=None
+        self.loss_history=[]
+        self.y_scaled=None
+        self.y_pred_scaled=None
+    def dataset(self,filename):
+        self.df=pd.read_csv(filename)
+        self.feature_names = self.df.select_dtypes(include=['number']).columns.difference(['Price','Avg. Area Number of Bedrooms']).tolist()
+        self.y=self.df["Price"]
+        self.m=len(self.y)
+        print(self.m)
+    def Linear_regression(self):
+        X = self.df[self.feature_names].values
+        scaler_x = StandardScaler()
+        X_scaled = scaler_x.fit_transform(X) 
+        Xb=np.c_[np.ones(self.m),X_scaled]
+        theta = np.ones((Xb.shape[1],1))
+        scaler_y = StandardScaler()
+        self.y_scaled = scaler_y.fit_transform(self.y.values.reshape(-1, 1)).flatten()
+        alpha=0.01
+        best_epoch=self.m 
+        alpha=0.001 
+        prev_mse = float('inf')
+        patience = 5
+        counter = 0
+
+
+        for i in range(best_epoch):
+            self.y_pred_scaled = (Xb @ theta).reshape(-1) 
+            e = self.y_pred_scaled - self.y_scaled
+            mse = np.mean(e**2)
+            self.loss_history.append(mse)
+            gradJ = (2/self.m) * (Xb.T @ e.reshape(-1, 1))
+            theta = theta - alpha * gradJ  
+            
+            if abs(prev_mse - mse) < 1e-7: 
+                counter += 1
+                if counter >= patience:
+                    break
+            else:
+                counter = 0
+            prev_mse = mse
+        
+        print("Model Features:", *self.feature_names,sep='\n')
+        print("mse=",mse)
+
+
+        final_y_pred_scaled_2d = (Xb @ theta).reshape(-1, 1)
+        self.y_pred = scaler_y.inverse_transform(final_y_pred_scaled_2d).flatten()
+    def plot(self):
+        # Original Residual Plot
+        residuals = self.df["Price"] - self.y_pred
+        plt.scatter(self.y_pred, residuals,color="red", alpha=0.5)
+        plt.axhline(y=0, color='blue', linestyle='--')
+        plt.title("Residual Plot (Checking Feature Relation)")
+        plt.xlabel("Predicted Price")
+        plt.ylabel("Error (Actual - Predicted)")
+        Residual_plot_fn=os.path.join("images", f"Residual_plot_{safe_timestamp}.png")
+
+        plt.savefig(Residual_plot_fn, dpi=300, bbox_inches='tight')
+        plt.show()
+        
+        # Loss Curve
+        plt.plot(self.loss_history)
+        plt.title("Model Convergence (Loss Curve)")
+        plt.xlabel("Epochs")
+        plt.ylabel("Mean Squared Error")
+        plt.text(0.95, 0.95, f'Final MSE: {self.loss_history[-1]:.4f}\nCorrelation(R): {self.model_correlation:.4f}\nR^2: {self.r_squared:.4f}', 
+         transform=plt.gca().transAxes, # This is the magic line
+         verticalalignment='top', horizontalalignment='right',
+         bbox=dict(facecolor='white', alpha=0.8, edgecolor='blue', boxstyle='round'))
+        loss_curve_fn=os.path.join("images", f"loss_curve_{safe_timestamp}.png")
+        plt.savefig(loss_curve_fn, dpi=300, bbox_inches='tight')
+        plt.show()
+
+
+    def evaluate_model(self):
+        r_matrix = np.corrcoef(self.y, self.y_pred)
+        self.model_correlation = r_matrix[0, 1]
+        print(f"Model Correlation (R): {self.model_correlation:.4f}")
+        self.r_squared = self.model_correlation**2
+        print(f"R-Squared: {self.r_squared:.4f}")
+
+    def run(self):
+        self.dataset("USA_Housing.csv")
+        self.Linear_regression()
+        self.evaluate_model()
+        self.plot()
+        
+
+if __name__ == "__main__":
+    Model = model()
+    Model.run()
+    

@@ -1,0 +1,14 @@
+[19:03:31] Error logger testing i know very early lol
+
+[19:03:31] ============================== CRASH DETECTED ==============================
+[19:03:31] Timestamp: 2026-01-14 19:03:31.735904
+[19:03:31] Traceback (most recent call last):
+[19:03:31]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 214, in <module>
+[19:03:31]     Model = model()
+[19:03:31]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 126, in __init__
+[19:03:31]     raise EOFError
+[19:03:31] EOFError
+
+[19:03:31] ============================================================================
+
+#so because of my genius all previous errors not logged noted to note make this same dumb mistake

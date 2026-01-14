@@ -1,0 +1,9 @@
+[12:09:54] 5000
+[12:09:55] Model Features:
+[12:09:55] Area Population
+[12:09:55] Avg. Area House Age
+[12:09:55] Avg. Area Income
+[12:09:55] mse= 0.20196994953606437
+[12:09:59] Model Correlation (R): 0.8933
+[12:09:59] R-Squared: 0.7981
+#dev Note Avg. Area Number of Rooms matters

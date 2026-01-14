@@ -1,0 +1,24 @@
+[19:08:44] 5000
+[19:08:44] Model Features:
+[19:08:44] Area Population
+[19:08:44] Avg. Area House Age
+[19:08:44] Avg. Area Income
+[19:08:44] Avg. Area Number of Rooms
+[19:08:44] mse= 0.08202714761373452
+
+[19:08:44] ============================== CRASH DETECTED ==============================
+[19:08:44] Timestamp: 2026-01-14 19:08:44.344860
+[19:08:44] Traceback (most recent call last):
+[19:08:44]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 216, in <module>
+[19:08:44]     Model.run()
+[19:08:44]     ~~~~~~~~~^^
+[19:08:44]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 210, in run
+[19:08:44]     self.evaluate_model()
+[19:08:44]     ~~~~~~~~~~~~~~~~~~~^^
+[19:08:44]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 203, in evaluate_model
+[19:08:44]     print(f"Model Correlation (R): {model_correlation:.4f}")
+[19:08:44]                                     ^^^^^^^^^^^^^^^^^
+[19:08:44] NameError: name 'model_correlation' is not defined. Did you mean: 'self.model_correlation'?
+
+[19:08:44] ============================================================================
+

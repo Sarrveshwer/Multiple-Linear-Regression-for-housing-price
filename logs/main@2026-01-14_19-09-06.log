@@ -1,0 +1,25 @@
+[19:09:06] 5000
+[19:09:06] Model Features:
+[19:09:06] Area Population
+[19:09:06] Avg. Area House Age
+[19:09:06] Avg. Area Income
+[19:09:06] Avg. Area Number of Rooms
+[19:09:06] mse= 0.08202714761373452
+[19:09:06] Model Correlation (R): 0.9581
+
+[19:09:06] ============================== CRASH DETECTED ==============================
+[19:09:06] Timestamp: 2026-01-14 19:09:06.651142
+[19:09:06] Traceback (most recent call last):
+[19:09:06]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 216, in <module>
+[19:09:06]     Model.run()
+[19:09:06]     ~~~~~~~~~^^
+[19:09:06]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 210, in run
+[19:09:06]     self.evaluate_model()
+[19:09:06]     ~~~~~~~~~~~~~~~~~~~^^
+[19:09:06]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 205, in evaluate_model
+[19:09:06]     print(f"R-Squared: {r_squared:.4f}")
+[19:09:06]                         ^^^^^^^^^
+[19:09:06] NameError: name 'r_squared' is not defined. Did you mean: 'self.r_squared'?
+
+[19:09:06] ============================================================================
+

@@ -1,0 +1,14 @@
+[05:29:36] <bound method NDFrame.describe of      Student_ID First_Name Last_Name  ... Family_Income_Level Stress_Level (1-10)  Sleep_Hours_per_Night
+[05:29:36] 0         S1000       Omar  Williams  ...              Medium                   1                    5.9
+[05:29:36] 1         S1001      Maria     Brown  ...                 Low                   4                    4.3
+[05:29:36] 2         S1002      Ahmed     Jones  ...                 Low                   9                    6.1
+[05:29:36] 3         S1003       Omar  Williams  ...                 Low                   8                    4.9
+[05:29:36] 4         S1004       John     Smith  ...              Medium                   6                    4.5
+[05:29:36] ...         ...        ...       ...  ...                 ...                 ...                    ...
+[05:29:36] 4995      S5995      Ahmed     Jones  ...              Medium                  10                    4.5
+[05:29:36] 4996      S5996       Emma     Brown  ...              Medium                   4                    7.2
+[05:29:36] 4997      S5997       John     Brown  ...                High                   5                    6.6
+[05:29:36] 4998      S5998       Sara     Davis  ...              Medium                  10                    5.9
+[05:29:36] 4999      S5999      Maria     Brown  ...                High                   2                    5.3
+
+[05:29:36] [5000 rows x 23 columns]>
