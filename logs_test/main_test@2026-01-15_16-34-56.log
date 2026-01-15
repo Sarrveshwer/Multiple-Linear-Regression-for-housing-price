@@ -1,0 +1,60 @@
+
+[16:34:56] ----- Model for USA_Housing.csv -----
+[16:34:56] This model contains 5000 datapoints
+[16:34:56] Model Features:
+[16:34:56] Area Population
+[16:34:56] Avg. Area House Age
+[16:34:56] Avg. Area Income
+[16:34:56] Avg. Area Number of Bedrooms
+[16:34:56] Avg. Area Number of Rooms
+[16:34:56] mse= 0.08198227969880013
+[16:34:56] Model Correlation (R): 0.9581
+[16:34:56] R-Squared: 0.9180
+
+[16:34:56] --- Feature Importance (Beta Values) ---
+[16:34:56] Area Population: 0.4276
+[16:34:56] Avg. Area House Age: 0.4652
+[16:34:56] Avg. Area Income: 0.6513
+[16:34:56] Avg. Area Number of Bedrooms: 0.0081
+[16:34:56] Avg. Area Number of Rooms: 0.3414
+
+[16:35:11] ----- Model for kc_house_data.csv -----
+[16:35:11] This model contains 21613 datapoints
+[16:35:11] Model Features:
+[16:35:11] bathrooms
+[16:35:11] bedrooms
+[16:35:11] condition
+[16:35:11] floors
+[16:35:11] grade
+[16:35:11] lat
+[16:35:11] long
+[16:35:11] sqft_above
+[16:35:11] sqft_basement
+[16:35:11] sqft_living
+[16:35:11] sqft_lot
+[16:35:11] sqft_lot15
+[16:35:11] view
+[16:35:11] waterfront
+[16:35:11] yr_built
+[16:35:11] yr_renovated
+[16:35:11] mse= 0.3055074137104961
+[16:35:11] Model Correlation (R): 0.8334
+[16:35:11] R-Squared: 0.6945
+
+[16:35:11] --- Feature Importance (Beta Values) ---
+[16:35:11] bathrooms: 0.0784
+[16:35:11] bedrooms: -0.0863
+[16:35:11] condition: 0.0555
+[16:35:11] floors: -0.0027
+[16:35:11] grade: 0.3236
+[16:35:11] lat: 0.2137
+[16:35:11] long: -0.0387
+[16:35:11] sqft_above: 0.3929
+[16:35:11] sqft_basement: 0.1646
+[16:35:11] sqft_living: 0.0501
+[16:35:11] sqft_lot: 0.0121
+[16:35:11] sqft_lot15: -0.0278
+[16:35:11] view: 0.1089
+[16:35:11] waterfront: 0.1374
+[16:35:11] yr_built: -0.1915
+[16:35:11] yr_renovated: 0.0235

@@ -67,15 +67,15 @@ Avg. Area Number of Rooms: 0.3414
 
 **Visual Evaluations:**
 
- ![Residual Plot](images/Residual_plot_2026-01-14_19-10-21.png)
+ ![Residual Plot](images/Residual_plot_2026-01-15_16-49-29.png)
 
 ### Loss Curve
 
 
-![Loss Curve](/images/loss_curve_2026-01-14_20-03-17.png)
+![Loss Curve](images/loss_curve_2026-01-15_16-49-29.png)
 
 
-![Feature Importance](images/feature_importance_2026-01-15_07-12-27.png) 
+![Feature Importance](images/feature_importance_2026-01-15_16-49-29.png) 
 
 ### 2. Model for kc_house_data.csv
 
@@ -124,11 +124,11 @@ yr_renovated: 0.0235
 ```
 
 **Visual Evaluations:**
- ![Residual Plot](images/Residual_plot_2026-01-15_07-22-17.png)
+ ![Residual Plot](images/Residual_plot_2026-01-15_16-49-33.png)
 
-![Loss Curve](images/loss_curve_2026-01-15_07-22-17.png)
+![Loss Curve](images/loss_curve_2026-01-15_16-49-33.png)
 
-![Feature Importance](images/feature_importance_2026-01-15_07-22-17.png) 
+![Feature Importance](images/feature_importance_2026-01-15_16-49-33.png) 
 
 ### Datasets Used
 

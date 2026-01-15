@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
+from scipy.interpolate import interpn
 import logging
 import time
 import sys
@@ -185,45 +186,61 @@ class LinearRegressionModel:
 
         final_y_pred_scaled_2d = (Xb @ theta).reshape(-1, 1)
         self.y_pred = scaler_y.inverse_transform(final_y_pred_scaled_2d).flatten()
+        
     def plot(self):
-        # Original Residual Plot
-        residuals = self.y - self.y_pred
-        plt.scatter(self.y_pred, residuals,color="red", alpha=0.5)
-        plt.axhline(y=0, color='blue', linestyle='--')
-        plt.title("Residual Plot (Checking Feature Relation)")
-        plt.xlabel("Predicted Price")
-        plt.ylabel("Error (Actual - Predicted)")
-        Residual_plot_fn=os.path.join("images", f"Residual_plot_{safe_timestamp}.png")
+        sns.set_theme(style="darkgrid")
+        safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        
+        x_val = self.y_pred
+        y_val = self.y - self.y_pred
+        data, x_e, y_e = np.histogram2d(x_val, y_val, bins=[100, 100], density=True)
+        z_val = interpn((0.5*(x_e[1:]+x_e[:-1]), 0.5*(y_e[1:]+y_e[:-1])), 
+                    data, np.vstack([x_val, y_val]).T, 
+                    method="splinef2d", bounds_error=False)
+        idx = z_val.argsort()
+        x_val, y_val, z_val = x_val[idx], y_val[idx], z_val[idx]
 
-        plt.savefig(Residual_plot_fn, dpi=300, bbox_inches='tight')
+        plt.figure(figsize=(10, 6))
+        plt.scatter(x_val, y_val, c=z_val, cmap="Greens_r", s=20, alpha=0.9, edgecolor='none')
+        plt.axhline(y=0, color='cyan', linestyle='--', linewidth=2)
+        plt.title("Residual Density: Dark (Dense) to Light (Sparse)", fontsize=15, fontweight='bold')
+        plt.xlabel("Predicted Price")
+        plt.ylabel("Residuals")
+        plt.savefig(os.path.join("images", f"Residual_plot_{safe_timestamp}.png"), dpi=300, bbox_inches='tight')
         plt.show()
         
-        # Loss Curve
-        plt.plot(self.loss_history)
-        plt.title("Model Convergence (Loss Curve)")
+        plt.figure(figsize=(10, 5))
+        epochs = range(len(self.loss_history))
+        plt.plot(epochs, self.loss_history, color='#FF4500', linewidth=2.5)
+        plt.fill_between(epochs, self.loss_history, color='#FF4500', alpha=0.2)
+        plt.title("Model Optimization Convergence", fontsize=14, fontweight='bold')
         plt.xlabel("Epochs")
         plt.ylabel("Mean Squared Error")
-        plt.text(0.95, 0.95, f'Final MSE: {self.loss_history[-1]:.4f}\nCorrelation(R): {self.model_correlation:.4f}\nR^2: {self.r_squared:.4f}', 
-         transform=plt.gca().transAxes, # This is the magic line
-         verticalalignment='top', horizontalalignment='right',
-         bbox=dict(facecolor='white', alpha=0.8, edgecolor='blue', boxstyle='round'))
-        loss_curve_fn=os.path.join("images", f"loss_curve_{safe_timestamp}.png")
-        plt.savefig(loss_curve_fn, dpi=300, bbox_inches='tight')
+        stats_text = (f'Final MSE: {self.loss_history[-1]:.4f}\n'
+                      f'Correlation (R): {self.model_correlation:.4f}\n'
+                      f'R² Score: {self.r_squared:.4f}')
+        plt.gca().text(0.95, 0.95, stats_text, transform=plt.gca().transAxes,
+                       verticalalignment='top', horizontalalignment='right',
+                       bbox=dict(facecolor='black', alpha=0.6, edgecolor='none', boxstyle='round,pad=1'), color='white')
+        plt.savefig(os.path.join("images", f"loss_curve_{safe_timestamp}.png"), dpi=300, bbox_inches='tight')
         plt.show()
 
+        # IMPACT ANALYSIS - FORCED COLOR CHANGE
         plt.figure(figsize=(10, 8))
-        importance_df = pd.DataFrame({
-            'Feature': self.feature_names,
-            'Coefficient': self.theta[1:].flatten()
-        })
+        importance_df = pd.DataFrame({'Feature': self.feature_names, 'Coefficient': self.theta[1:].flatten()})
         importance_df['Abs_Val'] = importance_df['Coefficient'].abs()
         importance_df = importance_df.sort_values(by='Abs_Val', ascending=False)
         
+        # This explicitly overrides any global theme settings for this specific plot
+        sns.set_palette("viridis") 
         sns.barplot(x='Coefficient', y='Feature', hue='Feature', data=importance_df, palette='viridis', legend=False)        
-        plt.title("Feature Importance (Standardized Beta Weights)")
+        
+        plt.title("Feature Importance (Standardized Beta Weights)", fontsize=16, fontweight='bold')
         plt.axvline(x=0, color='black', linestyle='-', linewidth=0.5)
         plt.savefig(os.path.join("images", f"feature_importance_{safe_timestamp}.png"), dpi=300, bbox_inches='tight')
         plt.show()
+
+
         
     def evaluate_model(self):
         r_matrix = np.corrcoef(self.y, self.y_pred)

@@ -1,0 +1,68 @@
+
+[16:39:58] ----- Model for USA_Housing.csv -----
+[16:39:58] This model contains 5000 datapoints
+[16:39:58] Model Features:
+[16:39:58] Area Population
+[16:39:58] Avg. Area House Age
+[16:39:58] Avg. Area Income
+[16:39:58] Avg. Area Number of Bedrooms
+[16:39:58] Avg. Area Number of Rooms
+[16:39:58] mse= 0.08198227969880013
+[16:39:58] Model Correlation (R): 0.9581
+[16:39:58] R-Squared: 0.9180
+
+[16:39:58] --- Feature Importance (Beta Values) ---
+[16:39:58] Area Population: 0.4276
+[16:39:58] Avg. Area House Age: 0.4652
+[16:39:58] Avg. Area Income: 0.6513
+[16:39:58] Avg. Area Number of Bedrooms: 0.0081
+[16:39:58] Avg. Area Number of Rooms: 0.3414
+
+[16:39:58] ============================== CRASH DETECTED ==============================
+[16:39:58] Timestamp: 2026-01-15 16:39:58.910640
+[16:39:58] Traceback (most recent call last):
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 269, in <module>
+[16:39:58]     Model1.run("USA_Housing.csv")
+[16:39:58]     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 264, in run
+[16:39:58]     self.plot()
+[16:39:58]     ~~~~~~~~~^^
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 203, in plot
+[16:39:58]     plot = sns.jointplot(
+[16:39:58]         x=x_val, y=y_val,
+[16:39:58]     ...<3 lines>...
+[16:39:58]         marginal_kws=dict(fill=True, color="#440154")
+[16:39:58]     )
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.13/site-packages/seaborn/axisgrid.py", line 2257, in jointplot
+[16:39:58]     grid.plot_joint(scatterplot, **joint_kws)
+[16:39:58]     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.13/site-packages/seaborn/axisgrid.py", line 1832, in plot_joint
+[16:39:58]     func(x=self.x, y=self.y, **kwargs)
+[16:39:58]     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.13/site-packages/seaborn/relational.py", line 636, in scatterplot
+[16:39:58]     p.plot(ax, kwargs)
+[16:39:58]     ~~~~~~^^^^^^^^^^^^
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.13/site-packages/seaborn/relational.py", line 438, in plot
+[16:39:58]     points = ax.scatter(x=x, y=y, **kws)
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.13/site-packages/matplotlib/_api/deprecation.py", line 453, in wrapper
+[16:39:58]     return func(*args, **kwargs)
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.13/site-packages/matplotlib/__init__.py", line 1524, in inner
+[16:39:58]     return func(
+[16:39:58]         ax,
+[16:39:58]         *map(cbook.sanitize_sequence, args),
+[16:39:58]         **{k: cbook.sanitize_sequence(v) for k, v in kwargs.items()})
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.13/site-packages/matplotlib/axes/_axes.py", line 4954, in scatter
+[16:39:58]     self._parse_scatter_color_args(
+[16:39:58]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[16:39:58]         c, edgecolors, kwargs, x.size,
+[16:39:58]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[16:39:58]         get_next_color_func=self._get_patches_for_fill.get_next_color)
+[16:39:58]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[16:39:58]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.13/site-packages/matplotlib/axes/_axes.py", line 4686, in _parse_scatter_color_args
+[16:39:58]     raise ValueError("Supply a 'c' argument or a 'color'"
+[16:39:58]                      " kwarg but not both; they differ but"
+[16:39:58]                      " their functionalities overlap.")
+[16:39:58] ValueError: Supply a 'c' argument or a 'color' kwarg but not both; they differ but their functionalities overlap.
+
+[16:39:58] ============================================================================
+
