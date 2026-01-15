@@ -1,0 +1,13 @@
+
+[20:52:22] ============================== CRASH DETECTED ==============================
+[20:52:22] Timestamp: 2026-01-14 20:52:22.254661
+[20:52:22] Traceback (most recent call last):
+[20:52:22]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 233, in <module>
+[20:52:22]     Model = model()
+[20:52:22]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 129, in __init__
+[20:52:22]     price_col = [col for col in self.df.columns if 'price' in col.lower()]
+[20:52:22]                                 ^^^^^^^^^^^^^^^
+[20:52:22] AttributeError: 'NoneType' object has no attribute 'columns'
+
+[20:52:22] ============================================================================
+

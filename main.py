@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from scipy.stats import t
 from sklearn.preprocessing import StandardScaler
 import logging
 import time
@@ -70,8 +69,7 @@ class Logger(object):
 
 filename = os.path.splitext(os.path.basename(__file__))[0]
 try:
-    
-    a=int(input("Test(1) or Not (2): "))
+    a=2 #int(input("Test(1) or Not (2): "))
     if a==1:
         os.mkdir("logs")
     else:
@@ -118,7 +116,7 @@ def handle_exception(exc_type, exc_value, exc_traceback):
 sys.excepthook = handle_exception
 #--------------------------MODEL---------------------------
 
-class model:
+class LinearRegressionModel:
     def __init__(self):
         self.df=None
         self.feature_names=None
@@ -126,12 +124,22 @@ class model:
         self.loss_history=[]
         self.y_scaled=None
         self.y_pred_scaled=None
+
     def dataset(self,filename):
+        print(f'\n----- Model for {filename} -----')
         self.df=pd.read_csv(filename)
-        self.feature_names = self.df.select_dtypes(include=['number']).columns.difference(['Price','Avg. Area Number of Bedrooms']).tolist()
-        self.y=self.df["Price"]
+        price_col = [col for col in self.df.columns if 'price' in col.lower()]
+
+        if price_col:
+            self.y = self.df[price_col[0]]
+        else:
+            print("Could not find a price column!")
+            exit()
         self.m=len(self.y)
-        print(self.m)
+        print(f"This model contains {self.m} datapoints")
+        exclude_cols = [price_col[0], 'id', 'date', 'sqft_living15', 'zipcode']
+        self.feature_names = self.df.select_dtypes(include=['number']).columns.difference(exclude_cols).tolist()
+
     def Linear_regression(self):
         #Making the matrix by adding all the features
         X = self.df[self.feature_names].values
@@ -170,7 +178,7 @@ class model:
             else:
                 counter = 0
             prev_mse = mse
-        
+        self.theta=theta
         print("Model Features:", *self.feature_names,sep='\n')
         print("mse=",mse)
 
@@ -179,7 +187,7 @@ class model:
         self.y_pred = scaler_y.inverse_transform(final_y_pred_scaled_2d).flatten()
     def plot(self):
         # Original Residual Plot
-        residuals = self.df["Price"] - self.y_pred
+        residuals = self.y - self.y_pred
         plt.scatter(self.y_pred, residuals,color="red", alpha=0.5)
         plt.axhline(y=0, color='blue', linestyle='--')
         plt.title("Residual Plot (Checking Feature Relation)")
@@ -203,7 +211,20 @@ class model:
         plt.savefig(loss_curve_fn, dpi=300, bbox_inches='tight')
         plt.show()
 
-
+        plt.figure(figsize=(10, 8))
+        importance_df = pd.DataFrame({
+            'Feature': self.feature_names,
+            'Coefficient': self.theta[1:].flatten()
+        })
+        importance_df['Abs_Val'] = importance_df['Coefficient'].abs()
+        importance_df = importance_df.sort_values(by='Abs_Val', ascending=False)
+        
+        sns.barplot(x='Coefficient', y='Feature', hue='Feature', data=importance_df, palette='viridis', legend=False)        
+        plt.title("Feature Importance (Standardized Beta Weights)")
+        plt.axvline(x=0, color='black', linestyle='-', linewidth=0.5)
+        plt.savefig(os.path.join("images", f"feature_importance_{safe_timestamp}.png"), dpi=300, bbox_inches='tight')
+        plt.show()
+        
     def evaluate_model(self):
         r_matrix = np.corrcoef(self.y, self.y_pred)
         self.model_correlation = r_matrix[0, 1]
@@ -211,14 +232,22 @@ class model:
         self.r_squared = self.model_correlation**2
         print(f"R-Squared: {self.r_squared:.4f}")
 
-    def run(self):
-        self.dataset("USA_Housing.csv")
+    def show_feature_importance(self):
+        print("\n--- Feature Importance (Beta Values) ---")
+        for name, weight in zip(self.feature_names, self.theta[1:].flatten()):
+            print(f"{name}: {float(weight):.4f}")
+    
+    def run(self,filename):
+        self.dataset(filename)
         self.Linear_regression()
         self.evaluate_model()
+        self.show_feature_importance()
         self.plot()
         
 
 if __name__ == "__main__":
-    Model = model()
-    Model.run()
+    Model1 = LinearRegressionModel()
+    Model1.run("USA_Housing.csv")
+    Model2 = LinearRegressionModel()
+    Model2.run("kc_house_data.csv")
     

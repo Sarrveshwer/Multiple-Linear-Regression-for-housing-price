@@ -1,0 +1,11 @@
+
+[07:10:42] ============================== CRASH DETECTED ==============================
+[07:10:42] Timestamp: 2026-01-15 07:10:42.630727
+[07:10:42] Traceback (most recent call last):
+[07:10:42]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 249, in <module>
+[07:10:42]     Model.run("USA_Housing.csv")
+[07:10:42]     ^^^^^
+[07:10:42] NameError: name 'Model' is not defined. Did you mean: 'Model1'?
+
+[07:10:42] ============================================================================
+

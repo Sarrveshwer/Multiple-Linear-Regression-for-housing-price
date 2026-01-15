@@ -1,0 +1,15 @@
+[22:30:13] 5000
+[22:30:13] Model Features:
+[22:30:13] Area Population
+[22:30:13] Avg. Area House Age
+[22:30:13] Avg. Area Income
+[22:30:13] Avg. Area Number of Rooms
+[22:30:13] mse= 0.0820053423458216
+[22:30:13] Model Correlation (R): 0.9581
+[22:30:13] R-Squared: 0.9180
+
+[22:30:13] --- Feature Importance (Beta Values) ---
+[22:30:13] Area Population: 0.4279
+[22:30:13] Avg. Area House Age: 0.4658
+[22:30:13] Avg. Area Income: 0.6519
+[22:30:13] Avg. Area Number of Rooms: 0.3471

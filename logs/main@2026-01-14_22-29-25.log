@@ -1,0 +1,41 @@
+[22:29:25] 21613
+[22:29:25] Model Features:
+[22:29:25] bathrooms
+[22:29:25] bedrooms
+[22:29:25] condition
+[22:29:25] floors
+[22:29:25] grade
+[22:29:25] lat
+[22:29:25] long
+[22:29:25] sqft_above
+[22:29:25] sqft_basement
+[22:29:25] sqft_living
+[22:29:25] sqft_lot
+[22:29:25] sqft_lot15
+[22:29:25] view
+[22:29:25] waterfront
+[22:29:25] yr_built
+[22:29:25] yr_renovated
+[22:29:25] zipcode
+[22:29:25] mse= 0.3008325141632088
+[22:29:25] Model Correlation (R): 0.8362
+[22:29:25] R-Squared: 0.6992
+
+[22:29:25] --- Feature Importance (Beta Values) ---
+[22:29:25] bathrooms: 0.0763
+[22:29:25] bedrooms: -0.0900
+[22:29:25] condition: 0.0473
+[22:29:25] floors: 0.0074
+[22:29:25] grade: 0.3173
+[22:29:25] lat: 0.2294
+[22:29:25] long: -0.0784
+[22:29:25] sqft_above: 0.3905
+[22:29:25] sqft_basement: 0.1673
+[22:29:25] sqft_living: 0.0492
+[22:29:25] sqft_lot: 0.0129
+[22:29:25] sqft_lot15: -0.0275
+[22:29:25] view: 0.1150
+[22:29:25] waterfront: 0.1365
+[22:29:25] yr_built: -0.2050
+[22:29:25] yr_renovated: 0.0220
+[22:29:25] zipcode: -0.0872

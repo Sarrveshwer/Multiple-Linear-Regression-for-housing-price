@@ -1,0 +1,62 @@
+[07:00:59] 5000
+[07:00:59] Model Features:
+[07:00:59] Area Population
+[07:00:59] Avg. Area House Age
+[07:00:59] Avg. Area Income
+[07:00:59] Avg. Area Number of Bedrooms
+[07:00:59] Avg. Area Number of Rooms
+[07:00:59] mse= 0.08198227969880013
+[07:00:59] Model Correlation (R): 0.9581
+[07:00:59] R-Squared: 0.9180
+
+[07:00:59] --- Feature Importance (Beta Values) ---
+[07:00:59] Area Population: 0.4276
+[07:00:59] Avg. Area House Age: 0.4652
+[07:00:59] Avg. Area Income: 0.6513
+[07:00:59] Avg. Area Number of Bedrooms: 0.0081
+[07:00:59] Avg. Area Number of Rooms: 0.3414
+[07:01:03] 21613
+[07:01:03] Model Features:
+[07:01:03] bathrooms
+[07:01:03] bedrooms
+[07:01:03] condition
+[07:01:03] floors
+[07:01:03] grade
+[07:01:03] id
+[07:01:03] lat
+[07:01:03] long
+[07:01:03] sqft_above
+[07:01:03] sqft_basement
+[07:01:03] sqft_living
+[07:01:03] sqft_living15
+[07:01:03] sqft_lot
+[07:01:03] sqft_lot15
+[07:01:03] view
+[07:01:03] waterfront
+[07:01:03] yr_built
+[07:01:03] yr_renovated
+[07:01:03] zipcode
+[07:01:03] mse= 0.3001828385311857
+[07:01:03] Model Correlation (R): 0.8366
+[07:01:03] R-Squared: 0.6998
+
+[07:01:03] --- Feature Importance (Beta Values) ---
+[07:01:03] bathrooms: 0.0790
+[07:01:03] bedrooms: -0.0896
+[07:01:03] condition: 0.0482
+[07:01:03] floors: 0.0117
+[07:01:03] grade: 0.3034
+[07:01:03] id: -0.0100
+[07:01:03] lat: 0.2280
+[07:01:03] long: -0.0831
+[07:01:03] sqft_above: 0.3779
+[07:01:03] sqft_basement: 0.1659
+[07:01:03] sqft_living: 0.0371
+[07:01:03] sqft_living15: 0.0436
+[07:01:03] sqft_lot: 0.0150
+[07:01:03] sqft_lot15: -0.0306
+[07:01:03] view: 0.1105
+[07:01:03] waterfront: 0.1373
+[07:01:03] yr_built: -0.2041
+[07:01:03] yr_renovated: 0.0233
+[07:01:03] zipcode: -0.0842

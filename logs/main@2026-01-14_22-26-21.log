@@ -1,0 +1,41 @@
+[22:26:21] 21613
+[22:26:21] Model Features:
+[22:26:21] bathrooms
+[22:26:21] bedrooms
+[22:26:21] condition
+[22:26:21] floors
+[22:26:21] grade
+[22:26:21] lat
+[22:26:21] long
+[22:26:21] sqft_above
+[22:26:21] sqft_basement
+[22:26:21] sqft_living
+[22:26:21] sqft_lot
+[22:26:21] sqft_lot15
+[22:26:21] view
+[22:26:21] waterfront
+[22:26:21] yr_built
+[22:26:21] yr_renovated
+[22:26:21] zipcode
+[22:26:21] mse= 0.3008325141632088
+[22:26:21] Model Correlation (R): 0.8362
+[22:26:21] R-Squared: 0.6992
+
+[22:26:21] --- Feature Importance (Beta Values) ---
+
+[22:26:21] ============================== CRASH DETECTED ==============================
+[22:26:21] Timestamp: 2026-01-14 22:26:21.939395
+[22:26:21] Traceback (most recent call last):
+[22:26:21]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 238, in <module>
+[22:26:21]     Model.run("kc_house_data.csv")
+[22:26:21]     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+[22:26:21]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 232, in run
+[22:26:21]     self.show_feature_importance()
+[22:26:21]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[22:26:21]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 226, in show_feature_importance
+[22:26:21]     print(f"{name}: {float(weight):.4f}")
+[22:26:21]                      ~~~~~^^^^^^^^
+[22:26:21] TypeError: only 0-dimensional arrays can be converted to Python scalars
+
+[22:26:21] ============================================================================
+

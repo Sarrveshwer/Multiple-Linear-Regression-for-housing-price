@@ -7,3 +7,4 @@
 [12:11:20] mse= 0.08202714761373452
 [12:11:23] Model Correlation (R): 0.9581
 [12:11:23] R-Squared: 0.9180
+#NOTE:After running the file at main@2026-01-14_20-03-17.log it was noted that there was a significant decrease in the number of epochs for the model to converge

@@ -1,0 +1,21 @@
+[21:00:24] 21613
+[21:00:24] Model Features:
+[21:00:24] bathrooms
+[21:00:24] bedrooms
+[21:00:24] condition
+[21:00:24] floors
+[21:00:24] grade
+[21:00:24] lat
+[21:00:24] long
+[21:00:24] sqft_above
+[21:00:24] sqft_basement
+[21:00:24] sqft_living
+[21:00:24] sqft_lot
+[21:00:24] sqft_lot15
+[21:00:24] waterfront
+[21:00:24] yr_built
+[21:00:24] yr_renovated
+[21:00:24] zipcode
+[21:00:24] mse= 0.3102461351098427
+[21:00:24] Model Correlation (R): 0.8305
+[21:00:24] R-Squared: 0.6898
