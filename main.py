@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 from scipy.interpolate import interpn
 import logging
 import time
@@ -11,10 +12,8 @@ import datetime
 import os
 import traceback
 
-
 """
 FINAL OUTPUT AFTER TESTING
-
 Model Features:
 Area Population
 Avg. Area House Age
@@ -123,74 +122,114 @@ class LinearRegressionModel:
         self.feature_names=None
         self.y=None
         self.loss_history=[]
-        self.y_scaled=None
-        self.y_pred_scaled=None
+        self.y_pred=None
+        self.theta=None
+        self.best_epoch_found = 0
+        self.scaler_x = StandardScaler()
+        self.scaler_y = StandardScaler()
 
-    def dataset(self,filename):
+    def dataset(self,filename,column,exclude):
         print(f'\n----- Model for {filename} -----')
-        self.df=pd.read_csv(filename)
-        price_col = [col for col in self.df.columns if 'price' in col.lower()]
-
+        self.df=pd.read_csv(filename).drop_duplicates().dropna().reset_index(drop=True)
+        price_col = [col for col in self.df.columns if column.lower() in col.lower()]
         if price_col:
             self.y = self.df[price_col[0]]
         else:
             print("Could not find a price column!")
-            exit()
+            sys.exit()
         self.m=len(self.y)
         print(f"This model contains {self.m} datapoints")
-        exclude_cols = [price_col[0], 'id', 'date', 'sqft_living15', 'zipcode']
+        exclude_cols = [price_col[0], 'id', 'date', 'sqft_living15', 'zipcode']+exclude
         self.feature_names = self.df.select_dtypes(include=['number']).columns.difference(exclude_cols).tolist()
 
-    def Linear_regression(self):
-        #Making the matrix by adding all the features
-        X = self.df[self.feature_names].values
-        #scalling
-        scaler_x = StandardScaler()
-        X_scaled = scaler_x.fit_transform(X) 
-        #Creating X_biased
-        Xb=np.c_[np.ones(self.m),X_scaled]
-        #initialize theta and scale y
+    def gradient_descent_engine(self, X_scaled, y_scaled, max_epochs, val_data=None):
+        m = len(y_scaled)
+        Xb = np.c_[np.ones(m), X_scaled]
         theta = np.ones((Xb.shape[1],1))
-        scaler_y = StandardScaler()
-        self.y_scaled = scaler_y.fit_transform(self.y.values.reshape(-1, 1)).flatten()
         
-        #time for gradient decent
         initial_alpha = 0.01  
         decay = 0.001 
-        best_epoch=self.m #this is after testing
         prev_mse = float('inf')
-        patience = 5
+        best_val_mse = float('inf')
+        best_theta = theta.copy()
+        best_epoch = 0
+        patience = 15
         counter = 0
+        local_loss_history = []
 
-
-        for i in range(best_epoch):
+        for i in range(max_epochs):
             alpha = initial_alpha * (1.0 / (1.0 + decay * i))
-            self.y_pred_scaled = (Xb @ theta).reshape(-1) 
-            e = self.y_pred_scaled - self.y_scaled
+            y_pred_scaled = (Xb @ theta).reshape(-1) 
+            e = y_pred_scaled - y_scaled
             mse = np.mean(e**2)
-            self.loss_history.append(mse)
-            gradJ = (2/self.m) * (Xb.T @ e.reshape(-1, 1))
+            local_loss_history.append(mse)
+            
+            gradJ = (2/m) * (Xb.T @ e.reshape(-1, 1))
             theta = theta - alpha * gradJ  
             
-            if abs(prev_mse - mse) < 1e-7: 
-                counter += 1
-                if counter >= patience:
-                    break
+            # Logic for Early Stopping / Best Epoch identification
+            if val_data is not None:
+                X_val_scaled, y_val_scaled = val_data
+                Xb_val = np.c_[np.ones(len(y_val_scaled)), X_val_scaled]
+                val_mse = np.mean(((Xb_val @ theta).reshape(-1) - y_val_scaled)**2)
+                
+                if val_mse < best_val_mse:
+                    best_val_mse = val_mse
+                    best_theta = theta.copy()
+                    best_epoch = i
+                    counter = 0
+                else:
+                    counter += 1
+                if counter >= patience: break
             else:
-                counter = 0
-            prev_mse = mse
-        self.theta=theta
-        print("Model Features:", *self.feature_names,sep='\n')
-        print("mse=",mse)
+                # Standard convergence for final training
+                if abs(prev_mse - mse) < 1e-7: 
+                    counter += 1
+                    if counter >= patience: break
+                else:
+                    counter = 0
+                prev_mse = mse
+                best_theta = theta
+                best_epoch = i
 
+        return best_theta, local_loss_history, best_epoch
 
-        final_y_pred_scaled_2d = (Xb @ theta).reshape(-1, 1)
-        self.y_pred = scaler_y.inverse_transform(final_y_pred_scaled_2d).flatten()
+    def Linear_regression(self):
+        X = self.df[self.feature_names].values
+        y = self.y.values.reshape(-1, 1)
+
+        # 1. SPLIT DATA to find best epoch and validate trends
+        print("Step 1: Splitting data to identify optimal trend duration...")
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
         
+        X_tr_s = self.scaler_x.fit_transform(X_train)
+        y_tr_s = self.scaler_y.fit_transform(y_train).flatten()
+        X_te_s = self.scaler_x.transform(X_test)
+        y_te_s = self.scaler_y.transform(y_test).flatten()
+
+        _, _, self.best_epoch_found = self.gradient_descent_engine(X_tr_s, y_tr_s, len(y_tr_s), val_data=(X_te_s, y_te_s))
+        print(f"Optimal trend identified at epoch: {self.best_epoch_found}")
+
+        # 2. FINAL TRAINING on 100% of data
+        print(f"Step 2: Training final model on 100% data for {self.best_epoch_found} epochs...")
+        X_all_s = self.scaler_x.fit_transform(X)
+        y_all_s = self.scaler_y.fit_transform(y).flatten()
+        
+        self.theta, self.loss_history, _ = self.gradient_descent_engine(X_all_s, y_all_s, self.best_epoch_found)
+        
+        # Calculate final predictions for analysis
+        Xb_all = np.c_[np.ones(len(y_all_s)), X_all_s]
+        final_y_pred_scaled = (Xb_all @ self.theta).reshape(-1, 1)
+        self.y_pred = self.scaler_y.inverse_transform(final_y_pred_scaled).flatten()
+
+        print("Model Features:", *self.feature_names, sep='\n')
+        print("Final Training MSE=", self.loss_history[-1])
+
     def plot(self):
         sns.set_theme(style="darkgrid")
         safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         
+        # RESIDUAL DENSITY PLOT
         x_val = self.y_pred
         y_val = self.y - self.y_pred
         data, x_e, y_e = np.histogram2d(x_val, y_val, bins=[100, 100], density=True)
@@ -201,19 +240,20 @@ class LinearRegressionModel:
         x_val, y_val, z_val = x_val[idx], y_val[idx], z_val[idx]
 
         plt.figure(figsize=(10, 6))
-        plt.scatter(x_val, y_val, c=z_val, cmap="Greens_r", s=20, alpha=0.9, edgecolor='none')
+        plt.scatter(x_val, y_val, c=z_val, cmap="mako", s=20, alpha=0.9, edgecolor='none')
         plt.axhline(y=0, color='cyan', linestyle='--', linewidth=2)
-        plt.title("Residual Density: Dark (Dense) to Light (Sparse)", fontsize=15, fontweight='bold')
-        plt.xlabel("Predicted Price")
+        plt.title("Residual Density: Trend Analysis (Full Dataset)", fontsize=15, fontweight='bold')
+        plt.xlabel("Predicted Values")
         plt.ylabel("Residuals")
         plt.savefig(os.path.join("images", f"Residual_plot_{safe_timestamp}.png"), dpi=300, bbox_inches='tight')
         plt.show()
         
+        # CONVERGENCE PLOT
         plt.figure(figsize=(10, 5))
         epochs = range(len(self.loss_history))
         plt.plot(epochs, self.loss_history, color='#FF4500', linewidth=2.5)
         plt.fill_between(epochs, self.loss_history, color='#FF4500', alpha=0.2)
-        plt.title("Model Optimization Convergence", fontsize=14, fontweight='bold')
+        plt.title(f"Model Optimization Convergence (Epochs: {self.best_epoch_found})", fontsize=14, fontweight='bold')
         plt.xlabel("Epochs")
         plt.ylabel("Mean Squared Error")
         stats_text = (f'Final MSE: {self.loss_history[-1]:.4f}\n'
@@ -225,23 +265,17 @@ class LinearRegressionModel:
         plt.savefig(os.path.join("images", f"loss_curve_{safe_timestamp}.png"), dpi=300, bbox_inches='tight')
         plt.show()
 
-        # IMPACT ANALYSIS - FORCED COLOR CHANGE
+        # FEATURE IMPORTANCE
         plt.figure(figsize=(10, 8))
         importance_df = pd.DataFrame({'Feature': self.feature_names, 'Coefficient': self.theta[1:].flatten()})
         importance_df['Abs_Val'] = importance_df['Coefficient'].abs()
         importance_df = importance_df.sort_values(by='Abs_Val', ascending=False)
-        
-        # This explicitly overrides any global theme settings for this specific plot
-        sns.set_palette("viridis") 
         sns.barplot(x='Coefficient', y='Feature', hue='Feature', data=importance_df, palette='viridis', legend=False)        
-        
         plt.title("Feature Importance (Standardized Beta Weights)", fontsize=16, fontweight='bold')
         plt.axvline(x=0, color='black', linestyle='-', linewidth=0.5)
         plt.savefig(os.path.join("images", f"feature_importance_{safe_timestamp}.png"), dpi=300, bbox_inches='tight')
         plt.show()
 
-
-        
     def evaluate_model(self):
         r_matrix = np.corrcoef(self.y, self.y_pred)
         self.model_correlation = r_matrix[0, 1]
@@ -254,17 +288,17 @@ class LinearRegressionModel:
         for name, weight in zip(self.feature_names, self.theta[1:].flatten()):
             print(f"{name}: {float(weight):.4f}")
     
-    def run(self,filename):
-        self.dataset(filename)
+    def run(self,filename,column,exclude):
+        self.dataset(filename,column,exclude)
         self.Linear_regression()
         self.evaluate_model()
         self.show_feature_importance()
         self.plot()
-        
 
 if __name__ == "__main__":
-    Model1 = LinearRegressionModel()
-    Model1.run("USA_Housing.csv")
-    Model2 = LinearRegressionModel()
-    Model2.run("kc_house_data.csv")
-    
+    Model=LinearRegressionModel()
+    Model.run('USA_Housing.csv','Price',[])
+    Model1=LinearRegressionModel()
+    Model1.run('kc_house_data.csv','Price',[])
+    Model2=LinearRegressionModel()
+    Model2.run('realtor-data.csv','price',[])

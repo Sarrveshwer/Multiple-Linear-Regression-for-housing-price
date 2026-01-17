@@ -1,0 +1,92 @@
+
+[19:43:15] ----- Model for USA_Housing.csv -----
+[19:43:15] This model contains 5000 datapoints
+[19:43:15] Step 1: Splitting data to identify optimal trend duration...
+[19:43:15] Optimal trend identified at epoch: 3999
+[19:43:15] Step 2: Training final model on 100% data for 3999 epochs...
+[19:43:15] Model Features:
+[19:43:15] Area Population
+[19:43:15] Avg. Area House Age
+[19:43:15] Avg. Area Income
+[19:43:15] Avg. Area Number of Bedrooms
+[19:43:15] Avg. Area Number of Rooms
+[19:43:15] Final Training MSE= 0.08198143370666863
+[19:43:15] Model Correlation (R): 0.9581
+[19:43:15] R-Squared: 0.9180
+
+[19:43:15] --- Feature Importance (Beta Values) ---
+[19:43:15] Area Population: 0.4276
+[19:43:15] Avg. Area House Age: 0.4652
+[19:43:15] Avg. Area Income: 0.6513
+[19:43:15] Avg. Area Number of Bedrooms: 0.0080
+[19:43:15] Avg. Area Number of Rooms: 0.3415
+
+[19:43:18] ----- Model for kc_house_data.csv -----
+[19:43:19] This model contains 21613 datapoints
+[19:43:19] Step 1: Splitting data to identify optimal trend duration...
+[19:43:19] Optimal trend identified at epoch: 934
+[19:43:19] Step 2: Training final model on 100% data for 934 epochs...
+[19:43:19] Model Features:
+[19:43:19] bathrooms
+[19:43:19] bedrooms
+[19:43:19] condition
+[19:43:19] floors
+[19:43:19] grade
+[19:43:19] lat
+[19:43:19] long
+[19:43:19] sqft_above
+[19:43:19] sqft_basement
+[19:43:19] sqft_living
+[19:43:19] sqft_lot
+[19:43:19] sqft_lot15
+[19:43:19] view
+[19:43:19] waterfront
+[19:43:19] yr_built
+[19:43:19] yr_renovated
+[19:43:19] Final Training MSE= 0.30582691304132203
+[19:43:19] Model Correlation (R): 0.8332
+[19:43:19] R-Squared: 0.6942
+
+[19:43:19] --- Feature Importance (Beta Values) ---
+[19:43:19] bathrooms: 0.0578
+[19:43:19] bedrooms: -0.0831
+[19:43:19] condition: 0.0595
+[19:43:19] floors: 0.0007
+[19:43:19] grade: 0.3185
+[19:43:19] lat: 0.2159
+[19:43:19] long: -0.0420
+[19:43:19] sqft_above: 0.3978
+[19:43:19] sqft_basement: 0.1694
+[19:43:19] sqft_living: 0.0568
+[19:43:19] sqft_lot: 0.0133
+[19:43:19] sqft_lot15: -0.0287
+[19:43:19] view: 0.1101
+[19:43:19] waterfront: 0.1368
+[19:43:19] yr_built: -0.1770
+[19:43:19] yr_renovated: 0.0280
+
+[19:43:21] ----- Model for realtor-data.csv -----
+[19:43:25] This model contains 1084909 datapoints
+[19:43:25] Step 1: Splitting data to identify optimal trend duration...
+[19:43:31] Optimal trend identified at epoch: 407
+[19:43:31] Step 2: Training final model on 100% data for 407 epochs...
+[19:43:36] Model Features:
+[19:43:36] acre_lot
+[19:43:36] bath
+[19:43:36] bed
+[19:43:36] brokered_by
+[19:43:36] house_size
+[19:43:36] street
+[19:43:36] zip_code
+[19:43:36] Final Training MSE= 0.8417723529494356
+[19:43:36] Model Correlation (R): 0.3980
+[19:43:36] R-Squared: 0.1584
+
+[19:43:36] --- Feature Importance (Beta Values) ---
+[19:43:36] acre_lot: 0.0029
+[19:43:36] bath: 0.3760
+[19:43:36] bed: -0.0591
+[19:43:36] brokered_by: -0.0129
+[19:43:36] house_size: 0.0859
+[19:43:36] street: 0.0036
+[19:43:36] zip_code: 0.0983

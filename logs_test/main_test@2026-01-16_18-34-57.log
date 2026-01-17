@@ -1,0 +1,20 @@
+
+[18:34:57] ----- Model for dataset.csv -----
+[18:34:57] This model contains 5000 datapoints
+
+[18:34:57] ============================== CRASH DETECTED ==============================
+[18:34:57] Timestamp: 2026-01-16 18:34:57.123394
+[18:34:57] Traceback (most recent call last):
+[18:34:57]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 270, in <module>
+[18:34:57]     Model.run('dataset.csv','Final_Score',['Total_Score'])
+[18:34:57]     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[18:34:57]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 257, in run
+[18:34:57]     self.dataset(filename,column,exclude)
+[18:34:57]     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+[18:34:57]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 140, in dataset
+[18:34:57]     exclude_cols = [price_col[0], 'id', 'date', 'sqft_living15', 'zipcode']+exculde
+[18:34:57]                                                                             ^^^^^^^
+[18:34:57] NameError: name 'exculde' is not defined. Did you mean: 'exclude'?
+
+[18:34:57] ============================================================================
+

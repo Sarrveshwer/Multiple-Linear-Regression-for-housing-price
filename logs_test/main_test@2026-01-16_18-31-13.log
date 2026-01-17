@@ -1,0 +1,11 @@
+
+[18:31:13] ----- Model for dataset.csv -----
+[18:31:13] Index(['Student_ID', 'First_Name', 'Last_Name', 'Email', 'Gender', 'Age',
+[18:31:13]        'Department', 'Attendance (%)', 'Midterm_Score', 'Final_Score',
+[18:31:13]        'Assignments_Avg', 'Quizzes_Avg', 'Participation_Score',
+[18:31:13]        'Projects_Score', 'Total_Score', 'Grade', 'Study_Hours_per_Week',
+[18:31:13]        'Extracurricular_Activities', 'Internet_Access_at_Home',
+[18:31:13]        'Parent_Education_Level', 'Family_Income_Level', 'Stress_Level (1-10)',
+[18:31:13]        'Sleep_Hours_per_Night'],
+[18:31:13]       dtype='object')
+[18:31:13] ['Final_Score']

@@ -1,0 +1,32 @@
+
+[19:16:27] ----- Model for dataset.csv -----
+[19:16:27] This model contains 5000 datapoints
+[19:16:27] Step 1: Splitting data to identify optimal trend duration...
+[19:16:27] Optimal trend identified at epoch: 310
+[19:16:27] Step 2: Training final model on 100% data for 310 epochs...
+[19:16:27] Model Features:
+[19:16:27] Age
+[19:16:27] Assignments_Avg
+[19:16:27] Attendance (%)
+[19:16:27] Midterm_Score
+[19:16:27] Participation_Score
+[19:16:27] Projects_Score
+[19:16:27] Quizzes_Avg
+[19:16:27] Sleep_Hours_per_Night
+[19:16:27] Stress_Level (1-10)
+[19:16:27] Study_Hours_per_Week
+[19:16:27] Final Training MSE= 0.9995042609257413
+[19:16:27] Model Correlation (R): 0.0232
+[19:16:27] R-Squared: 0.0005
+
+[19:16:27] --- Feature Importance (Beta Values) ---
+[19:16:27] Age: -0.0007
+[19:16:27] Assignments_Avg: 0.0175
+[19:16:27] Attendance (%): -0.0048
+[19:16:27] Midterm_Score: 0.0005
+[19:16:27] Participation_Score: -0.0076
+[19:16:27] Projects_Score: -0.0023
+[19:16:27] Quizzes_Avg: 0.0093
+[19:16:27] Sleep_Hours_per_Night: 0.0136
+[19:16:27] Stress_Level (1-10): -0.0023
+[19:16:27] Study_Hours_per_Week: 0.0097

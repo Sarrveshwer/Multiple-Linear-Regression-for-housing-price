@@ -1,0 +1,108 @@
+
+[19:30:25] ----- Model for USA_Housing.csv -----
+[19:30:26] This model contains 5000 datapoints
+[19:30:26] Step 1: Splitting data to identify optimal trend duration...
+[19:30:26] Optimal trend identified at epoch: 3999
+[19:30:26] Step 2: Training final model on 100% data for 3999 epochs...
+[19:30:26] Model Features:
+[19:30:26] Area Population
+[19:30:26] Avg. Area House Age
+[19:30:26] Avg. Area Income
+[19:30:26] Avg. Area Number of Bedrooms
+[19:30:26] Avg. Area Number of Rooms
+[19:30:26] Final Training MSE= 0.08198143370666863
+[19:30:26] Model Correlation (R): 0.9581
+[19:30:26] R-Squared: 0.9180
+
+[19:30:26] --- Feature Importance (Beta Values) ---
+[19:30:26] Area Population: 0.4276
+[19:30:26] Avg. Area House Age: 0.4652
+[19:30:26] Avg. Area Income: 0.6513
+[19:30:26] Avg. Area Number of Bedrooms: 0.0080
+[19:30:26] Avg. Area Number of Rooms: 0.3415
+
+[19:30:29] ----- Model for kc_house_data.csv -----
+[19:30:30] This model contains 21613 datapoints
+[19:30:30] Step 1: Splitting data to identify optimal trend duration...
+[19:30:30] Optimal trend identified at epoch: 934
+[19:30:30] Step 2: Training final model on 100% data for 934 epochs...
+[19:30:30] Model Features:
+[19:30:30] bathrooms
+[19:30:30] bedrooms
+[19:30:30] condition
+[19:30:30] floors
+[19:30:30] grade
+[19:30:30] lat
+[19:30:30] long
+[19:30:30] sqft_above
+[19:30:30] sqft_basement
+[19:30:30] sqft_living
+[19:30:30] sqft_lot
+[19:30:30] sqft_lot15
+[19:30:30] view
+[19:30:30] waterfront
+[19:30:30] yr_built
+[19:30:30] yr_renovated
+[19:30:30] Final Training MSE= 0.30582691304132203
+[19:30:30] Model Correlation (R): 0.8332
+[19:30:30] R-Squared: 0.6942
+
+[19:30:30] --- Feature Importance (Beta Values) ---
+[19:30:30] bathrooms: 0.0578
+[19:30:30] bedrooms: -0.0831
+[19:30:30] condition: 0.0595
+[19:30:30] floors: 0.0007
+[19:30:30] grade: 0.3185
+[19:30:30] lat: 0.2159
+[19:30:30] long: -0.0420
+[19:30:30] sqft_above: 0.3978
+[19:30:30] sqft_basement: 0.1694
+[19:30:30] sqft_living: 0.0568
+[19:30:30] sqft_lot: 0.0133
+[19:30:30] sqft_lot15: -0.0287
+[19:30:30] view: 0.1101
+[19:30:30] waterfront: 0.1368
+[19:30:30] yr_built: -0.1770
+[19:30:30] yr_renovated: 0.0280
+
+[19:30:33] ----- Model for housing.csv.csv -----
+
+[19:30:33] ============================== CRASH DETECTED ==============================
+[19:30:33] Timestamp: 2026-01-17 19:30:33.930449
+[19:30:33] Traceback (most recent call last):
+[19:30:33]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 304, in <module>
+[19:30:33]     Model2.run('housing.csv.csv','Price',[])
+[19:30:33]     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[19:30:33]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 292, in run
+[19:30:33]     self.dataset(filename,column,exclude)
+[19:30:33]     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+[19:30:33]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 133, in dataset
+[19:30:33]     self.df=pd.read_csv(filename).dropna()
+[19:30:33]             ~~~~~~~~~~~^^^^^^^^^^
+[19:30:33]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.14/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+[19:30:33]     return _read(filepath_or_buffer, kwds)
+[19:30:33]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.14/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+[19:30:33]     parser = TextFileReader(filepath_or_buffer, **kwds)
+[19:30:33]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.14/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+[19:30:33]     self._engine = self._make_engine(f, self.engine)
+[19:30:33]                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+[19:30:33]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.14/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+[19:30:33]     self.handles = get_handle(
+[19:30:33]                    ~~~~~~~~~~^
+[19:30:33]         f,
+[19:30:33]         ^^
+[19:30:33]     ...<6 lines>...
+[19:30:33]         storage_options=self.options.get("storage_options", None),
+[19:30:33]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[19:30:33]     )
+[19:30:33]     ^
+[19:30:33]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.14/site-packages/pandas/io/common.py", line 873, in get_handle
+[19:30:33]     handle = open(
+[19:30:33]         handle,
+[19:30:33]     ...<3 lines>...
+[19:30:33]         newline="",
+[19:30:33]     )
+[19:30:33] FileNotFoundError: [Errno 2] No such file or directory: 'housing.csv.csv'
+
+[19:30:33] ============================================================================
+

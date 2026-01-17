@@ -1,0 +1,11 @@
+
+[18:34:05] ============================== CRASH DETECTED ==============================
+[18:34:05] Timestamp: 2026-01-16 18:34:05.245539
+[18:34:05] Traceback (most recent call last):
+[18:34:05]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 271, in <module>
+[18:34:05]     Model.run('dataset.csv','Final_Score',('Total_Score'))
+[18:34:05]     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[18:34:05] TypeError: LinearRegressionModel.run() takes 3 positional arguments but 4 were given
+
+[18:34:05] ============================================================================
+

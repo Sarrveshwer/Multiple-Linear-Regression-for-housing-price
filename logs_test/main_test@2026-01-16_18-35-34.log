@@ -1,0 +1,30 @@
+
+[18:35:34] ----- Model for dataset.csv -----
+[18:35:34] This model contains 5000 datapoints
+[18:35:34] ['Age', 'Assignments_Avg', 'Attendance (%)', 'Midterm_Score', 'Participation_Score', 'Projects_Score', 'Quizzes_Avg', 'Sleep_Hours_per_Night', 'Stress_Level (1-10)', 'Study_Hours_per_Week']
+[18:35:35] Model Features:
+[18:35:35] Age
+[18:35:35] Assignments_Avg
+[18:35:35] Attendance (%)
+[18:35:35] Midterm_Score
+[18:35:35] Participation_Score
+[18:35:35] Projects_Score
+[18:35:35] Quizzes_Avg
+[18:35:35] Sleep_Hours_per_Night
+[18:35:35] Stress_Level (1-10)
+[18:35:35] Study_Hours_per_Week
+[18:35:35] mse= 0.9993170124338668
+[18:35:35] Model Correlation (R): 0.0261
+[18:35:35] R-Squared: 0.0007
+
+[18:35:35] --- Feature Importance (Beta Values) ---
+[18:35:35] Age: -0.0035
+[18:35:35] Assignments_Avg: 0.0142
+[18:35:35] Attendance (%): -0.0085
+[18:35:35] Midterm_Score: -0.0039
+[18:35:35] Participation_Score: -0.0115
+[18:35:35] Projects_Score: -0.0066
+[18:35:35] Quizzes_Avg: 0.0052
+[18:35:35] Sleep_Hours_per_Night: 0.0114
+[18:35:35] Stress_Level (1-10): -0.0041
+[18:35:35] Study_Hours_per_Week: 0.0056

@@ -1,0 +1,39 @@
+
+[18:29:24] ----- Model for dataset.csv -----
+[18:29:25] Index(['Student_ID', 'First_Name', 'Last_Name', 'Email', 'Gender', 'Age',
+[18:29:25]        'Department', 'Attendance (%)', 'Midterm_Score', 'Final_Score',
+[18:29:25]        'Assignments_Avg', 'Quizzes_Avg', 'Participation_Score',
+[18:29:25]        'Projects_Score', 'Total_Score', 'Grade', 'Study_Hours_per_Week',
+[18:29:25]        'Extracurricular_Activities', 'Internet_Access_at_Home',
+[18:29:25]        'Parent_Education_Level', 'Family_Income_Level', 'Stress_Level (1-10)',
+[18:29:25]        'Sleep_Hours_per_Night'],
+[18:29:25]       dtype='object')
+[18:29:25] This model contains 5000 datapoints
+[18:29:25] Model Features:
+[18:29:25] Age
+[18:29:25] Assignments_Avg
+[18:29:25] Attendance (%)
+[18:29:25] Midterm_Score
+[18:29:25] Participation_Score
+[18:29:25] Projects_Score
+[18:29:25] Quizzes_Avg
+[18:29:25] Sleep_Hours_per_Night
+[18:29:25] Stress_Level (1-10)
+[18:29:25] Study_Hours_per_Week
+[18:29:25] Total_Score
+[18:29:25] mse= 4.972364336723464e-05
+[18:29:25] Model Correlation (R): 1.0000
+[18:29:25] R-Squared: 1.0000
+
+[18:29:25] --- Feature Importance (Beta Values) ---
+[18:29:25] Age: -0.0000
+[18:29:25] Assignments_Avg: -0.5009
+[18:29:25] Attendance (%): -0.0000
+[18:29:25] Midterm_Score: -0.6064
+[18:29:25] Participation_Score: -0.3362
+[18:29:25] Projects_Score: -1.0116
+[18:29:25] Quizzes_Avg: -0.3344
+[18:29:25] Sleep_Hours_per_Night: 0.0001
+[18:29:25] Stress_Level (1-10): -0.0001
+[18:29:25] Study_Hours_per_Week: 0.0001
+[18:29:25] Total_Score: 1.6791

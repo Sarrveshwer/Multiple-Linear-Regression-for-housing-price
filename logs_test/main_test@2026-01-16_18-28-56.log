@@ -1,0 +1,12 @@
+
+[18:28:56] ----- Model for dataset.csv -----
+[18:28:56] Index(['Student_ID', 'First_Name', 'Last_Name', 'Email', 'Gender', 'Age',
+[18:28:56]        'Department', 'Attendance (%)', 'Midterm_Score', 'Final_Score',
+[18:28:56]        'Assignments_Avg', 'Quizzes_Avg', 'Participation_Score',
+[18:28:56]        'Projects_Score', 'Total_Score', 'Grade', 'Study_Hours_per_Week',
+[18:28:56]        'Extracurricular_Activities', 'Internet_Access_at_Home',
+[18:28:56]        'Parent_Education_Level', 'Family_Income_Level', 'Stress_Level (1-10)',
+[18:28:56]        'Sleep_Hours_per_Night'],
+[18:28:56]       dtype='object')
+[18:28:56] Could not find a price column!
+[18:28:56] []
