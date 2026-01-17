@@ -1,0 +1,100 @@
+
+[20:25:33] ----- Model for USA_Housing.csv -----
+[20:25:33] This model contains 5000 datapoints
+[20:25:33] Step 1: Splitting data to identify optimal trend duration...
+[20:25:33] Optimal trend identified at epoch: 3999
+[20:25:33] Step 2: Training final model on 100% data for 3999 epochs...
+[20:25:33] Model Features:
+[20:25:33] Area Population
+[20:25:33] Avg. Area House Age
+[20:25:33] Avg. Area Income
+[20:25:33] Avg. Area Number of Bedrooms
+[20:25:33] Avg. Area Number of Rooms
+[20:25:33] Final Training MSE= 0.08198143370666863
+[20:25:33] Model Correlation (R): 0.9581
+[20:25:33] R-Squared: 0.9180
+
+[20:25:33] --- Feature Importance (Beta Values) ---
+[20:25:33] Area Population: 0.4276
+[20:25:33] Avg. Area House Age: 0.4652
+[20:25:33] Avg. Area Income: 0.6513
+[20:25:33] Avg. Area Number of Bedrooms: 0.0080
+[20:25:33] Avg. Area Number of Rooms: 0.3415
+
+[20:25:37] ----- Model for kc_house_data.csv -----
+[20:25:38] This model contains 21613 datapoints
+[20:25:38] Step 1: Splitting data to identify optimal trend duration...
+[20:25:38] Optimal trend identified at epoch: 934
+[20:25:38] Step 2: Training final model on 100% data for 934 epochs...
+[20:25:38] Model Features:
+[20:25:38] bathrooms
+[20:25:38] bedrooms
+[20:25:38] condition
+[20:25:38] floors
+[20:25:38] grade
+[20:25:38] lat
+[20:25:38] long
+[20:25:38] sqft_above
+[20:25:38] sqft_basement
+[20:25:38] sqft_living
+[20:25:38] sqft_lot
+[20:25:38] sqft_lot15
+[20:25:38] view
+[20:25:38] waterfront
+[20:25:38] yr_built
+[20:25:38] yr_renovated
+[20:25:38] Final Training MSE= 0.30582691304132203
+[20:25:38] Model Correlation (R): 0.8332
+[20:25:38] R-Squared: 0.6942
+
+[20:25:38] --- Feature Importance (Beta Values) ---
+[20:25:38] bathrooms: 0.0578
+[20:25:38] bedrooms: -0.0831
+[20:25:38] condition: 0.0595
+[20:25:38] floors: 0.0007
+[20:25:38] grade: 0.3185
+[20:25:38] lat: 0.2159
+[20:25:38] long: -0.0420
+[20:25:38] sqft_above: 0.3978
+[20:25:38] sqft_basement: 0.1694
+[20:25:38] sqft_living: 0.0568
+[20:25:38] sqft_lot: 0.0133
+[20:25:38] sqft_lot15: -0.0287
+[20:25:38] view: 0.1101
+[20:25:38] waterfront: 0.1368
+[20:25:38] yr_built: -0.1770
+[20:25:38] yr_renovated: 0.0280
+
+[20:25:41] ----- Model for nyc-rolling-sales.csv -----
+[20:25:42] This model contains 84548 datapoints
+[20:25:42] Step 1: Splitting data to identify optimal trend duration...
+[20:25:42] Optimal trend identified at epoch: 0
+[20:25:42] Step 2: Training final model on 100% data for 0 epochs...
+[20:25:42] Model Features:
+[20:25:42] BLOCK
+[20:25:42] BOROUGH
+[20:25:42] COMMERCIAL UNITS
+[20:25:42] LOT
+[20:25:42] RESIDENTIAL UNITS
+[20:25:42] TAX CLASS AT TIME OF SALE
+[20:25:42] TOTAL UNITS
+[20:25:42] Unnamed: 0
+[20:25:42] YEAR BUILT
+[20:25:42] ZIP CODE
+
+[20:25:42] ============================== CRASH DETECTED ==============================
+[20:25:42] Timestamp: 2026-01-17 20:25:42.338815
+[20:25:42] Traceback (most recent call last):
+[20:25:42]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 360, in <module>
+[20:25:42]     Model3.run('nyc-rolling-sales.csv','SALE PRICE',[])
+[20:25:42]     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[20:25:42]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 309, in run
+[20:25:42]     self.Linear_regression()
+[20:25:42]     ~~~~~~~~~~~~~~~~~~~~~~^^
+[20:25:42]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 234, in Linear_regression
+[20:25:42]     print("Final Training MSE=", self.loss_history[-1])
+[20:25:42]                                  ~~~~~~~~~~~~~~~~~^^^^
+[20:25:42] IndexError: list index out of range
+
+[20:25:42] ============================================================================
+

@@ -1,0 +1,57 @@
+
+[20:23:36] ----- Model for USA_Housing.csv -----
+[20:23:36] This model contains 5000 datapoints
+[20:23:36] Step 1: Splitting data to identify optimal trend duration...
+[20:23:36] Optimal trend identified at epoch: 3999
+[20:23:36] Step 2: Training final model on 100% data for 3999 epochs...
+[20:23:36] Model Features:
+[20:23:36] Area Population
+[20:23:36] Avg. Area House Age
+[20:23:36] Avg. Area Income
+[20:23:36] Avg. Area Number of Bedrooms
+[20:23:36] Avg. Area Number of Rooms
+[20:23:36] Final Training MSE= 0.08198143370666863
+[20:23:36] Model Correlation (R): 0.9581
+[20:23:36] R-Squared: 0.9180
+
+[20:23:36] --- Feature Importance (Beta Values) ---
+[20:23:36] Area Population: 0.4276
+[20:23:36] Avg. Area House Age: 0.4652
+[20:23:36] Avg. Area Income: 0.6513
+[20:23:36] Avg. Area Number of Bedrooms: 0.0080
+[20:23:36] Avg. Area Number of Rooms: 0.3415
+
+[20:23:39] ----- Model for kc_house_data.csv -----
+
+[20:23:39] ============================== CRASH DETECTED ==============================
+[20:23:39] Timestamp: 2026-01-17 20:23:39.396217
+[20:23:39] Traceback (most recent call last):
+[20:23:39]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.14/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+[20:23:39]     return self._engine.get_loc(casted_key)
+[20:23:39]            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+[20:23:39]   File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+[20:23:39]   File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+[20:23:39]   File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+[20:23:39]   File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+[20:23:39] KeyError: 'Price'
+
+[20:23:39] The above exception was the direct cause of the following exception:
+
+[20:23:39] Traceback (most recent call last):
+[20:23:39]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 349, in <module>
+[20:23:39]     Model1.run('kc_house_data.csv','Price',[])
+[20:23:39]     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[20:23:39]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 303, in run
+[20:23:39]     self.dataset(filename,column,exclude)
+[20:23:39]     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+[20:23:39]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/main.py", line 134, in dataset
+[20:23:39]     if self.df[column].dtype == 'object':
+[20:23:39]        ~~~~~~~^^^^^^^^
+[20:23:39]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+[20:23:39]     indexer = self.columns.get_loc(key)
+[20:23:39]   File "/home/sarrveshwer/Documents/GitHub/Multiple-Linear-Regression-for-housing/.venv/lib/python3.14/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+[20:23:39]     raise KeyError(key) from err
+[20:23:39] KeyError: 'Price'
+
+[20:23:39] ============================================================================
+

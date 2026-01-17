@@ -128,20 +128,47 @@ class LinearRegressionModel:
         self.scaler_x = StandardScaler()
         self.scaler_y = StandardScaler()
 
-    def dataset(self,filename,column,exclude):
+    def dataset(self, filename, column, exclude):
         print(f'\n----- Model for {filename} -----')
-        self.df=pd.read_csv(filename).drop_duplicates().dropna().reset_index(drop=True)
-        price_col = [col for col in self.df.columns if column.lower() in col.lower()]
-        if price_col:
-            self.y = self.df[price_col[0]]
-        else:
-            print("Could not find a price column!")
+        self.df = pd.read_csv(filename).drop_duplicates()
+        
+        actual_col = [col for col in self.df.columns if column.lower() == col.lower()]
+        if not actual_col:
+            actual_col = [col for col in self.df.columns if column.lower() in col.lower()]
+            
+        if not actual_col:
+            print(f"Error: Could not find column matching '{column}'")
             sys.exit()
-        self.m=len(self.y)
-        print(f"This model contains {self.m} datapoints")
-        exclude_cols = [price_col[0], 'id', 'date', 'sqft_living15', 'zipcode']+exclude
-        self.feature_names = self.df.select_dtypes(include=['number']).columns.difference(exclude_cols).tolist()
+        column = actual_col[0]
 
+        if self.df[column].dtype == 'object':
+            self.df[column] = pd.to_numeric(self.df[column], errors='coerce')
+        
+        print(f"Applying 1.5x IQR filter to {column}...")
+        Q1 = self.df[column].quantile(0.25)
+        Q3 = self.df[column].quantile(0.75)
+        IQR = Q3 - Q1
+        lower_bound = Q1 - 1.5 * IQR
+        upper_bound = Q3 + 1.5 * IQR
+        
+        pre_filter_count = len(self.df)
+        self.df = self.df[(self.df[column] >= lower_bound) & (self.df[column] <= upper_bound)]
+        post_filter_count = len(self.df)
+        
+        print(f"Outlier Removal: Removed {pre_filter_count - post_filter_count} rows.")
+        print(f"Keeping prices between ${lower_bound:,.2f} and ${upper_bound:,.2f}")
+        
+        self.df = self.df.dropna(subset=[column]).reset_index(drop=True)
+        self.df = self.df.dropna().reset_index(drop=True)
+        
+        self.y = self.df[column]
+        self.m = len(self.y)
+        print(f"This model contains {self.m} datapoints")
+        
+        # Standard exclusions for irrelevant/text columns
+        exclude_cols = [column, 'id', 'date', 'sqft_living15', 'zipcode', 'status', 
+                        'street', 'city', 'state', 'prev_sold_date', 'Unnamed: 0'] + exclude
+        self.feature_names = self.df.select_dtypes(include=['number']).columns.difference(exclude_cols).tolist()
     def gradient_descent_engine(self, X_scaled, y_scaled, max_epochs, val_data=None):
         m = len(y_scaled)
         Xb = np.c_[np.ones(m), X_scaled]
@@ -229,15 +256,23 @@ class LinearRegressionModel:
         sns.set_theme(style="darkgrid")
         safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         
+        # Samping logic to prevent IndexError on massive datasets
+        if len(self.y_pred) > 50000:
+            print("Sampling 20,000 points for visualization...")
+            indices = np.random.choice(len(self.y_pred), 20000, replace=False)
+            x_plot_raw = self.y_pred[indices]
+            y_plot_raw = (self.y.values[indices] - self.y_pred[indices])
+        else:
+            x_plot_raw = self.y_pred
+            y_plot_raw = self.y - self.y_pred
+
         # RESIDUAL DENSITY PLOT
-        x_val = self.y_pred
-        y_val = self.y - self.y_pred
-        data, x_e, y_e = np.histogram2d(x_val, y_val, bins=[100, 100], density=True)
+        data, x_e, y_e = np.histogram2d(x_plot_raw, y_plot_raw, bins=[100, 100], density=True)
         z_val = interpn((0.5*(x_e[1:]+x_e[:-1]), 0.5*(y_e[1:]+y_e[:-1])), 
-                    data, np.vstack([x_val, y_val]).T, 
+                    data, np.vstack([x_plot_raw, y_plot_raw]).T, 
                     method="splinef2d", bounds_error=False)
         idx = z_val.argsort()
-        x_val, y_val, z_val = x_val[idx], y_val[idx], z_val[idx]
+        x_val, y_val, z_val = x_plot_raw[idx], y_plot_raw[idx], z_val[idx]
 
         plt.figure(figsize=(10, 6))
         plt.scatter(x_val, y_val, c=z_val, cmap="mako", s=20, alpha=0.9, edgecolor='none')
@@ -295,10 +330,50 @@ class LinearRegressionModel:
         self.show_feature_importance()
         self.plot()
 
+    def segment_data(self, price_col):
+        q1 = self.df[price_col].quantile(0.33)
+        q2 = self.df[price_col].quantile(0.66)
+        print(f"Bin Thresholds: Low < {q1:.2f}, Mid < {q2:.2f}, High >= {q2:.2f}")
+        
+        self.bins = {
+            "Low-Tier Market": self.df[self.df[price_col] < q1].copy().reset_index(drop=True),
+            "Mid-Tier Market": self.df[(self.df[price_col] >= q1) & (self.df[price_col] < q2)].copy().reset_index(drop=True),
+            "High-Tier Market": self.df[self.df[price_col] >= q2].copy().reset_index(drop=True)
+        }
+
+    def run_with_binning(self, filename, column, exclude):
+        self.dataset(filename, column, exclude)
+        price_col_name = [col for col in self.df.columns if column.lower() in col.lower()][0]
+        self.segment_data(price_col_name)
+        
+        original_full_df = self.df.copy()
+        
+        for name, data_segment in self.bins.items():
+            if len(data_segment) < 20: 
+                print(f"Skipping {name}, too few data points.")
+                continue
+                
+            print(f"\n" + "="*20 + f" ANALYZING BIN: {name} " + "="*20)
+            self.df = data_segment
+            self.y = self.df[price_col_name]
+            self.m = len(self.y)
+            
+            self.Linear_regression()
+            self.evaluate_model()
+            self.show_feature_importance()
+            self.plot()
+        
+        self.df = original_full_df # Restore for any future operations
+
 if __name__ == "__main__":
     Model=LinearRegressionModel()
     Model.run('USA_Housing.csv','Price',[])
     Model1=LinearRegressionModel()
     Model1.run('kc_house_data.csv','Price',[])
-    Model2=LinearRegressionModel()
-    Model2.run('realtor-data.csv','price',[])
+    
+    #Model2=LinearRegressionModel()
+    #Model2.run_with_binning('realtor-data.csv','price',[])
+    
+    Model3=LinearRegressionModel()
+    Model3.run('nyc-rolling-sales.csv','SALE PRICE',[])
+    
