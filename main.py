@@ -104,10 +104,16 @@ class LinearRegressionModel:
         self.scaler_y = StandardScaler()
         self.current_filename = ""
         self.current_bin_name = ""
+        self.dataset_folder = ""
 
     def dataset(self, filename, column, exclude):
         print(f'\n----- Model for {filename} -----')
         self.current_filename = filename
+        
+        self.dataset_folder = os.path.splitext(filename)[0]
+        if not os.path.exists(self.dataset_folder):
+            os.makedirs(self.dataset_folder)
+            
         self.df = pd.read_csv(filename).drop_duplicates()
         
         actual_col = [col for col in self.df.columns if column.lower() == col.lower()]
@@ -123,29 +129,13 @@ class LinearRegressionModel:
             self.df[column] = pd.to_numeric(self.df[column], errors='coerce')
         
         self.df = self.df.dropna(subset=[column]).reset_index(drop=True)
-
-        print(f"Applying 1.5x IQR filter to {column}...")
-        Q1 = self.df[column].quantile(0.25)
-        Q3 = self.df[column].quantile(0.75)
-        IQR = Q3 - Q1
-        lower_bound = Q1 - 1.5 * IQR
-        upper_bound = Q3 + 1.5 * IQR
-        
-        pre_filter_count = len(self.df)
-        self.df = self.df[(self.df[column] >= lower_bound) & (self.df[column] <= upper_bound)]
-        post_filter_count = len(self.df)
-        
-        print(f"Outlier Removal: Removed {pre_filter_count - post_filter_count} rows.")
-        print(f"Keeping values between {lower_bound:,.2f} and {upper_bound:,.2f}")
-        
-        self.df = self.df.dropna().reset_index(drop=True)
+        self.df = self.df[self.df[column] > 0].reset_index(drop=True)
         
         self.y = self.df[column]
         self.m = len(self.y)
-        print(f"This model contains {self.m} datapoints")
+        print(f"Initial dataset contains {self.m} valid datapoints")
         
-        exclude_cols = [column, 'id', 'date', 'sqft_living15', 'zipcode', 'status', 
-                        'street', 'city', 'state', 'prev_sold_date', 'Unnamed: 0'] + exclude
+        exclude_cols = [column] + exclude
         self.feature_names = self.df.select_dtypes(include=['number']).columns.difference(exclude_cols).tolist()
 
     def gradient_descent_engine(self, X_scaled, y_scaled, max_epochs, val_data=None):
@@ -236,7 +226,7 @@ class LinearRegressionModel:
         ]
         
         fig, axes = plt.subplot_mosaic(layout, figsize=(24, 14))
-        fig.suptitle(f"Dashboard: {self.current_filename} {self.current_bin_name}", fontsize=20, fontweight='bold')
+        fig.suptitle(f"Dashboard: {self.current_filename} {self.current_bin_name} | {safe_timestamp}", fontsize=20, fontweight='bold')
 
         indices = np.arange(len(self.y_pred))
         if len(self.y_pred) > 50000:
@@ -277,7 +267,7 @@ class LinearRegressionModel:
         axes["Importance"].set_title("Feature Importance", fontsize=14)
         axes["Importance"].axvline(x=0, color='black', linestyle='-', linewidth=0.5)
 
-        axes["Actual_vs_Pred"].scatter(y_actual_raw, x_pred_raw, c=z_val[idx], cmap="mako", s=20, alpha=0.9, edgecolor='none')
+        axes["Actual_vs_Pred"].scatter(y_actual_raw, x_pred_raw, alpha=0.5, s=15, color='royalblue', edgecolor='none')
         lims = [np.min([axes["Actual_vs_Pred"].get_xlim(), axes["Actual_vs_Pred"].get_ylim()]), 
                 np.max([axes["Actual_vs_Pred"].get_xlim(), axes["Actual_vs_Pred"].get_ylim()])]
         axes["Actual_vs_Pred"].plot(lims, lims, 'r--', alpha=0.75, zorder=3, linewidth=2)
@@ -286,8 +276,9 @@ class LinearRegressionModel:
         axes["Actual_vs_Pred"].set_ylabel("Predicted Values")
 
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-        plt.savefig(os.path.join("images", f"Dashboard_{self.current_filename}_{self.current_bin_name}_{safe_timestamp}.png"), dpi=300, bbox_inches='tight')
-        plt.show()
+        save_name = f"Dashboard_{self.current_bin_name}_{safe_timestamp}.png"
+        plt.savefig(os.path.join(self.dataset_folder, save_name), dpi=300, bbox_inches='tight')
+        plt.close(fig)
 
     def evaluate_model(self):
         r_matrix = np.corrcoef(self.y, self.y_pred)
@@ -295,6 +286,21 @@ class LinearRegressionModel:
         print(f"Model Correlation (R): {self.model_correlation:.4f}")
         self.r_squared = self.model_correlation**2
         print(f"R-Squared: {self.r_squared:.4f}")
+        
+        safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        metrics_file = os.path.join(self.dataset_folder, f"model_metrics_{safe_timestamp}.txt")
+        with open(metrics_file, "w") as f:
+            f.write(f"Timestamp: {datetime.datetime.now()}\n")
+            f.write(f"Dataset: {self.current_filename}\n")
+            f.write(f"Bin: {self.current_bin_name}\n")
+            f.write("-" * 30 + "\n")
+            f.write(f"R-Value: {self.model_correlation:.4f}\n")
+            f.write(f"R-Squared: {self.r_squared:.4f}\n")
+            f.write(f"Final MSE: {self.loss_history[-1]:.6f}\n")
+            f.write(f"Best Epoch: {self.best_epoch_found}\n")
+            f.write("\nFeature Importances (Standardized Beta Weights):\n")
+            for name, weight in zip(self.feature_names, self.theta[1:].flatten()):
+                f.write(f"  {name}: {float(weight):.4f}\n")
 
     def show_feature_importance(self):
         print("\n--- Feature Importance (Beta Values) ---")
@@ -304,6 +310,11 @@ class LinearRegressionModel:
     def run(self,filename,column,exclude):
         self.current_bin_name = "Full_Data"
         self.dataset(filename,column,exclude)
+        Q1 = self.df[self.y.name].quantile(0.25)
+        Q3 = self.df[self.y.name].quantile(0.75)
+        IQR = Q3 - Q1
+        self.df = self.df[self.df[self.y.name] <= (Q3 + 1.5 * IQR)].reset_index(drop=True)
+        self.y = self.df[self.y.name]
         self.Linear_regression()
         self.evaluate_model()
         self.show_feature_importance()
@@ -330,11 +341,16 @@ class LinearRegressionModel:
         original_full_df = self.df.copy()
         for name, data_segment in self.bins.items():
             if len(data_segment) < 20: 
-                print(f"Skipping {name}, too few data points.")
                 continue
             print(f"\n" + "="*20 + f" ANALYZING BIN: {name} " + "="*20)
             self.current_bin_name = name
-            self.df = data_segment
+            if "High" not in name:
+                Q1 = data_segment[target_name].quantile(0.25)
+                Q3 = data_segment[target_name].quantile(0.75)
+                IQR = Q3 - Q1
+                self.df = data_segment[(data_segment[target_name] >= (Q1 - 1.5 * IQR)) & (data_segment[target_name] <= (Q3 + 1.5 * IQR))].copy().reset_index(drop=True)
+            else:
+                self.df = data_segment
             self.y = self.df[target_name]
             self.m = len(self.y)
             self.Linear_regression()
@@ -346,13 +362,13 @@ class LinearRegressionModel:
 
 if __name__ == "__main__":
     Model=LinearRegressionModel()
-    Model.run('USA_Housing.csv','Price',[])
+    Model.run_with_binning('USA_Housing.csv','Price', [])
 
     Model1=LinearRegressionModel()
-    Model1.run_with_binning('kc_house_data.csv','price',[])
+    Model1.run_with_binning('kc_house_data.csv','price', ['id', 'date', 'sqft_living15', 'zipcode'])
     
     Model3=LinearRegressionModel()
-    Model3.run_with_binning('realtor-data.csv','price',[])
+    Model3.run_with_binning('realtor-data.csv','price', ['status', 'street', 'city', 'state', 'prev_sold_date'])
     
     Model4=LinearRegressionModel()
-    Model4.run_with_binning('nyc-rolling-sales.csv','SALE PRICE',[])
+    Model4.run_with_binning('nyc-rolling-sales.csv','SALE PRICE', ['id', 'date', 'zipcode', 'Unnamed: 0'])

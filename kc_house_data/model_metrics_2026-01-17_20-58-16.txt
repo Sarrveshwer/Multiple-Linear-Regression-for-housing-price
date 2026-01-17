@@ -1,0 +1,26 @@
+Timestamp: 2026-01-17 20:58:16.627783
+Dataset: kc_house_data.csv
+Bin: Low-Tier
+------------------------------
+R-Value: 0.6494
+R-Squared: 0.4218
+Final MSE: 0.578238
+Best Epoch: 5299
+
+Feature Importances (Standardized Beta Weights):
+  bathrooms: 0.1317
+  bedrooms: -0.0494
+  condition: 0.1222
+  floors: 0.0238
+  grade: 0.2021
+  lat: 0.4940
+  long: 0.0360
+  sqft_above: 0.3841
+  sqft_basement: 0.2170
+  sqft_living: -0.0335
+  sqft_lot: 0.0212
+  sqft_lot15: 0.0305
+  view: 0.0794
+  waterfront: 0.0269
+  yr_built: 0.0757
+  yr_renovated: 0.0324

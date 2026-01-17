@@ -1,0 +1,19 @@
+Timestamp: 2026-01-17 20:59:40.849254
+Dataset: nyc-rolling-sales.csv
+Bin: High-Tier
+------------------------------
+R-Value: 0.3099
+R-Squared: 0.0961
+Final MSE: 0.903987
+Best Epoch: 331
+
+Feature Importances (Standardized Beta Weights):
+  BLOCK: -0.1304
+  BOROUGH: -0.0982
+  COMMERCIAL UNITS: 0.0430
+  LOT: 0.0192
+  RESIDENTIAL UNITS: 0.2012
+  TAX CLASS AT TIME OF SALE: 0.1540
+  TOTAL UNITS: -0.1054
+  YEAR BUILT: 0.0046
+  ZIP CODE: -0.0020
