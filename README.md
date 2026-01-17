@@ -4,174 +4,89 @@
 
 ## Introduction
 
-This project implements a custom **Multivariate Linear Regression** model from scratch to predict housing prices. By utilizing a gradient descent approach with feature scaling, the script determines how various socioeconomic and structural factors (such as area income, house age, and population) impact real estate value.
+This project implements a custom **Multivariate Linear Regression** model from scratch to predict housing prices across multiple global datasets (USA, King County, Realtor Data, and NYC). By utilizing a gradient descent approach with feature scaling and market segmentation, the script determines how various socioeconomic and structural factors impact real estate value.
 
-The implementation focuses on the mathematical foundations of machine learning, intentionally avoiding high-level libraries like Scikit-Learn for the model logic itself to better understand optimization and convergence mechanics.
+The implementation focuses on the mathematical foundations of machine learning, intentionally avoiding high-level libraries like Scikit-Learn for the model logic itself to better understand optimization, convergence mechanics, and market tiers.
 
 ## Technical Implementation
 
-The custom engine is built for stability and reproducibility, featuring:
+The custom engine is built for stability, scalability, and deep market insight:
 
-* **Optimization:** Implements **Gradient Descent with Learning Rate Decay** to strictly control step sizes and prevent overshoot during convergence.
-* **Preprocessing:** Manual implementation of `StandardScaler` to normalize features (Z-score normalization), ensuring that all $\theta$ weights are on a comparable scale for efficient gradient updates.
-* **Robust Logging:** An automated system using a custom `Logger` class and `sys.excepthook` that captures console outputs and error tracebacks with timestamps.
-* **Directory Structure:**
-    * `logs/logs_test`: Stores session history, user inputs, and model metrics.
-    * `images/`: Stores generated visualizations (residual plots, loss convergence, feature importance).
+* **Optimization:** Implements **Gradient Descent with Learning Rate Decay** and **Early Stopping** (patience-based) to ensure optimal convergence without overfitting.
+* **Market Segmentation (Binning):** Automatically segments datasets into **Low, Mid, and High Tiers** based on price quantiles, allowing for localized feature importance analysis.
+* **Massive Data Handling:** Features automated **sampling** (e.g., 1M rows for Realtor data) to maintain high performance with limited RAM.
+* **Preprocessing:** Manual implementation of `StandardScaler` to normalize features (Z-score normalization).
+* **Automated Reporting:** Each run generates a comprehensive **Dashboard** visualization and a `model_metrics.txt` summary within dataset-specific folders.
 
 ## Mathematical Foundations
 
-The model relies on core mathematical mechanics to achieve convergence:
+The model relies on core mathematical mechanics:
 
 ### 1. Hypothesis Function
-The linear relationship is defined as the weighted sum of inputs:
 $$\hat{y} = \theta^T X = \theta_0 + \theta_1x_1 + \dots + \theta_nx_n$$
 
 ### 2. Cost Function: Mean Squared Error (MSE)
-We measure accuracy by minimizing the average squared difference between predicted and actual values:
 $$J(\theta) = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
 
 ### 3. Optimization: Gradient Descent
-Weights are updated iteratively by moving against the gradient of the cost function:
 $$\theta_j := \theta_j - \alpha \frac{\partial J}{\partial \theta_j}$$
-
-Where the partial derivative is:
-$$\frac{\partial J}{\partial \theta_j} = \frac{2}{n} \sum_{i=1}^{n} (\hat{y}_i - y_i) \cdot x_{ij}$$
-
----
-
-## Model Outputs & Visual Evaluations
-
-### 1. Model for USA_Housing.csv
-```text
------ Model for USA_Housing.csv -----
-This model contains 5000 datapoints
-Model Features:
-Area Population
-Avg. Area House Age
-Avg. Area Income
-Avg. Area Number of Bedrooms
-Avg. Area Number of Rooms
-mse= 0.08198227969880013
-Model Correlation (R): 0.9581
-R-Squared: 0.9180
-
---- Feature Importance (Beta Values) ---
-Area Population: 0.4276
-Avg. Area House Age: 0.4652
-Avg. Area Income: 0.6513
-Avg. Area Number of Bedrooms: 0.0081
-Avg. Area Number of Rooms: 0.3414
-
-```
-
-**Visual Evaluations:**
-
- ![Residual Plot](images/Residual_plot_2026-01-15_16-49-29.png)
-
-### Loss Curve
-
-
-![Loss Curve](images/loss_curve_2026-01-15_16-49-29.png)
-
-
-![Feature Importance](images/feature_importance_2026-01-15_16-49-29.png) 
-
-### 2. Model for kc_house_data.csv
-
-```text
------ Model for kc_house_data.csv -----
-This model contains 21613 datapoints
-Model Features:
-bathrooms
-bedrooms
-condition
-floors
-grade
-lat
-long
-sqft_above
-sqft_basement
-sqft_living
-sqft_lot
-sqft_lot15
-view
-waterfront
-yr_built
-yr_renovated
-mse= 0.3055074137104961
-Model Correlation (R): 0.8334
-R-Squared: 0.6945
-
---- Feature Importance (Beta Values) ---
-bathrooms: 0.0784
-bedrooms: -0.0863
-condition: 0.0555
-floors: -0.0027
-grade: 0.3236
-lat: 0.2137
-long: -0.0387
-sqft_above: 0.3929
-sqft_basement: 0.1646
-sqft_living: 0.0501
-sqft_lot: 0.0121
-sqft_lot15: -0.0278
-view: 0.1089
-waterfront: 0.1374
-yr_built: -0.1915
-yr_renovated: 0.0235
-
-```
-
-**Visual Evaluations:**
- ![Residual Plot](images/Residual_plot_2026-01-15_16-49-33.png)
-
-![Loss Curve](images/loss_curve_2026-01-15_16-49-33.png)
-
-![Feature Importance](images/feature_importance_2026-01-15_16-49-33.png) 
-
-### Datasets Used
-
-* [USA Housing Dataset](https://www.kaggle.com/datasets/aariyan101/usa-housingcsv)
-* [King County House Sales Dataset](https://www.kaggle.com/datasets/harlfoxem/housesalesprediction)
 
 ---
 
 ## Experimental Results
 
-The model was tested on two distinct datasets to evaluate its versatility against both synthetic (highly linear) and real-world (noisy) data.
+The model was tested across four distinct datasets representing varied market conditions.
 
-| Dataset | Data Points | MSE | Correlation () |  Score | Dominant Feature |
-| --- | --- | --- | --- | --- | --- |
-| **USA_Housing.csv** | 5,000 | `0.0820` | **0.9581** | **0.9180** | Avg. Area Income () |
-| **kc_house_data.csv** | 21,613 | `0.3055` | **0.8334** | **0.6945** | Sqft Above () |
+| Dataset | Data Points | MSE | Correlation ($R$) | $R^2$ Score | Top Predictor |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **USA Housing** | 5,000 | `0.0850` | **0.9566** | **0.9151** | Area Income |
+| **King County** | 21,613 | `0.3132` | **0.8287** | **0.6868** | Grade / Sqft Above |
+| **Realtor Data** | 1,000,000* | `0.7482` | **0.5020** | **0.2520** | Bathrooms / Zip Code |
+| **NYC Rolling Sales** | 59,759 | `0.9579` | **0.2393** | **0.0573** | Lot / Year Built |
+
+*\*Sampled for optimization*
+
+---
+
+## Detailed Analysis & Visualizations
+
+### 1. USA Housing Analysis
+*High linearity, demographics-driven.*
+
+![USA Housing Dashboard](USA_Housing/Dashboard_Full_Data_2026-01-17_22-02-11.png)
+
+### 2. King County Analysis
+*Structural and geospatial drivers.*
+
+![King County Dashboard](kc_house_data/Dashboard_Full_Data_2026-01-17_22-02-21.png)
+
+### 3. Realtor Data (sampled)
+*Broad market trends across the US.*
+
+![Realtor Data Dashboard](realtor-data/Dashboard_Full_Data_2026-01-17_22-02-59.png)
+
+### 4. NYC Rolling Sales
+*Highest complexity, non-linear urban market.*
+
+![NYC Sales Dashboard](nyc-rolling-sales/Dashboard_Full_Data_2026-01-17_22-03-09.png)
 
 ---
 
 ## Conclusion & Insights
 
-This study highlights the contrast between ideal theoretical conditions (USA Housing) and real-world market complexity (King County).
+### 1. The Linearity Spectrum
+* **Ideal Markets (USA Housing):** Highly predictable ($R^2 > 0.9$) when wealth markers (Income) are available.
+* **Noisy Markets (NYC):** Low predictability ($R^2 < 0.1$) due to regulatory complexity, zoning, and high variance in urban sales which require more than linear modeling.
 
-### 1. Contextual Drivers
+### 2. Tiered Market Behavior
+The **Data Binning** feature revealed that feature importance shifts between price tiers. For example, in King County, geospatial impact (`lat`) is often more critical in Low-Tier markets, while structural `grade` dominates Mid and High-Tier evaluations.
 
-* **USA Dataset (Wealth Driven):** The primary drivers were demographic. `Avg. Area Income` () and `Avg. Area House Age` () largely determined price, resulting in a near-perfect linear fit ().
-* **King County Dataset (Structure Driven):** The primary drivers were physical. `sqft_above` () and `grade` () dominated the model.
+### 3. The Multi-Collinearity Challenge
+Datasets like King County exhibit the "Bedroom Paradox," where adding bedrooms can negatively impact price if living area remains constant, suggesting that room density negatively correlates with luxury.
 
-### 2. The Bedroom Paradox
+## Future Work
 
-In the King County dataset, **bedrooms** showed a negative coefficient (). This is a counter-intuitive finding that likely indicates **multicollinearity**.
-
-> **Insight:** When `sqft_living` is held constant, increasing the number of bedrooms implies smaller individual rooms, which may decrease the overall value of the property.
-
-### 3. Geospatial Impact
-
-The high importance of **Latitude** () in King County suggests that location is a primary linear predictor in real-world markets. A house's value is heavily dependent on *where* it is, not just *what* it is.
-
-### Future Work
-
-To improve the  on the King County dataset (currently ), future iterations will explore:
-
-* **Regularization:** Implementing Ridge (L2) or Lasso (L1) regression to handle the multicollinearity observed between bedrooms and square footage.
-* **Polynomial Features:** Introducing non-linear terms to capture the diminishing returns of house age or the compounding value of very large properties.
-* **Geospatial Clustering:** Using K-Means to cluster neighborhoods as a categorical feature instead of treating raw `lat`/`long` coordinates as linear inputs.
+* **Regularization:** Ridge/Lasso to penalize highly correlated features.
+* **Polynomial Expansion:** To capture non-linear relationships in urban datasets like NYC.
+* **Geospatial Clustering:** moving beyond raw Lat/Long to neighborhood-cluster features.
 

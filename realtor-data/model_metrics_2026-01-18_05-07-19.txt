@@ -1,0 +1,16 @@
+Timestamp: 2026-01-18 05:07:19.543941
+Dataset: realtor-data.csv
+Bin: Low-Tier
+------------------------------
+R-Value: 0.2518
+R-Squared: 0.0634
+Final MSE: 0.936600
+Best Epoch: 654
+
+Feature Importances (Standardized Beta Weights):
+  acre_lot: 0.0025
+  bath: 0.2765
+  bed: -0.0541
+  brokered_by: 0.0012
+  house_size: -0.0006
+  zip_code: 0.0127

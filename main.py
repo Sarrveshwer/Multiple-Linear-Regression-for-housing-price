@@ -106,46 +106,42 @@ class LinearRegressionModel:
         self.current_filename = ""
         self.current_bin_name = ""
         self.dataset_folder = ""
+    def z_scale(self, data, stats=None):
+            if stats is None:
+                mean = np.mean(data, axis=0)
+                std = np.std(data, axis=0)
+                std = np.where(std == 0, 1.0, std)
+                stats = {'mean': mean, 'std': std}
+            
+            scaled_data = (data - stats['mean']) / stats['std']
+            return scaled_data.astype('float32'), stats
+
+    def inverse_scale(self, scaled_data, stats):
+        return (scaled_data * stats['std']) + stats['mean']
 
     def dataset(self, filename, column, exclude):
         print(f'\n----- Model for {filename} -----')
         self.current_filename = filename
-        
         self.dataset_folder = os.path.splitext(filename)[0]
-        if not os.path.exists(self.dataset_folder):
-            os.makedirs(self.dataset_folder)
+        if not os.path.exists(self.dataset_folder): os.makedirs(self.dataset_folder)
             
         self.df = pd.read_csv(filename).drop_duplicates()
-        
-        if len(self.df) > 2000000:
-            print("Dataset too large, sampling 1,000,000 rows to optimize RAM...")
-            self.df = self.df.sample(n=2000000, random_state=42).reset_index(drop=True)
+        if len(self.df) > 1000000:
+            print("Dataset too large, sampling 1,000,000 rows...")
+            self.df = self.df.sample(n=1000000, random_state=42).reset_index(drop=True)
 
-        actual_col = [col for col in self.df.columns if column.lower() == col.lower()]
-        if not actual_col:
-            actual_col = [col for col in self.df.columns if column.lower() in col.lower()]
-            
-        if not actual_col:
-            print(f"Error: Could not find column matching '{column}'")
-            sys.exit()
-        column = actual_col[0]
-
-        if self.df[column].dtype == 'object':
-            self.df[column] = pd.to_numeric(self.df[column], errors='coerce')
+        actual_col = [col for col in self.df.columns if column.lower() in col.lower()][0]
+        if self.df[actual_col].dtype == 'object':
+            self.df[actual_col] = pd.to_numeric(self.df[actual_col], errors='coerce')
         
-        self.df = self.df.dropna(subset=[column]).reset_index(drop=True)
-        self.df = self.df[self.df[column] > 0].reset_index(drop=True)
+        self.df = self.df.dropna(subset=[actual_col]).reset_index(drop=True)
+        self.df = self.df[self.df[actual_col] > 0].reset_index(drop=True)
         
-        for col in self.df.select_dtypes(include=['float64']).columns:
+        for col in self.df.select_dtypes(include=['number']).columns:
             self.df[col] = self.df[col].astype('float32')
-        for col in self.df.select_dtypes(include=['int64']).columns:
-            self.df[col] = self.df[col].astype('int32')
 
-        self.y = self.df[column]
-        self.m = len(self.y)
-        print(f"Initial dataset contains {self.m} valid datapoints")
-        
-        exclude_cols = [column] + exclude
+        self.y = self.df[actual_col]
+        exclude_cols = [actual_col] + exclude
         self.feature_names = self.df.select_dtypes(include=['number']).columns.difference(exclude_cols).tolist()
         gc.collect()
 
@@ -153,7 +149,7 @@ class LinearRegressionModel:
         m = len(y_scaled)
         if m == 0: return np.ones((X_scaled.shape[1] + 1, 1)), [], 0
         Xb = np.c_[np.ones(m), X_scaled].astype('float32')
-        theta = np.ones((Xb.shape[1],1), dtype='float32')
+        theta = np.ones((Xb.shape[1], 1), dtype='float32')
         
         initial_alpha = 0.01  
         decay = 0.001 
@@ -172,11 +168,9 @@ class LinearRegressionModel:
             mse = np.mean(e**2)
             
             if np.isnan(mse) or np.isinf(mse):
-                print(f"Divergence detected at epoch {i}. Stopping.")
                 break
 
             local_loss_history.append(mse)
-            
             gradJ = (2/m) * (Xb.T @ e.reshape(-1, 1))
             theta = theta - np.float32(alpha) * gradJ  
             
@@ -208,41 +202,56 @@ class LinearRegressionModel:
     def Linear_regression(self):
         self.df = self.df.dropna(subset=self.feature_names).reset_index(drop=True)
         if self.df.empty:
-            print("Dataframe is empty after dropna!")
             self.loss_history = []
             return
 
         X = self.df[self.feature_names].values.astype('float32')
         y = self.df[self.y.name].values.reshape(-1, 1).astype('float32')
 
-        print("Step 1: Splitting data to identify optimal trend duration...")
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-        
-        X_tr_s = self.scaler_x.fit_transform(X_train)
-        y_tr_s = self.scaler_y.fit_transform(y_train).flatten()
-        X_te_s = self.scaler_x.transform(X_test)
-        y_te_s = self.scaler_y.transform(y_test).flatten()
+        X_scaled, self.stats_x = self.z_scale(X)
+        y_scaled, self.stats_y = self.z_scale(y)
 
-        _, _, self.best_epoch_found = self.gradient_descent_engine(X_tr_s, y_tr_s, len(y_tr_s), val_data=(X_te_s, y_te_s))
+        print("Step 1: Splitting data for trend analysis...")
+        X_train, X_test, y_train, y_test = train_test_split(X_scaled, y_scaled.flatten(), test_size=0.2, random_state=42)
+        
+        _, _, self.best_epoch_found = self.gradient_descent_engine(X_train, y_train, len(y_train), val_data=(X_test, y_test))
         self.best_epoch_found = max(1, self.best_epoch_found)
-        print(f"Optimal trend identified at epoch: {self.best_epoch_found}")
 
-        print(f"Step 2: Training final model on 100% data for {self.best_epoch_found} epochs...")
-        X_all_s = self.scaler_x.fit_transform(X)
-        y_all_s = self.scaler_y.fit_transform(y).flatten()
+        print(f"Step 2: Training on 100% data for {self.best_epoch_found} epochs...")
+        self.theta, self.loss_history, _ = self.gradient_descent_engine(X_scaled, y_scaled.flatten(), self.best_epoch_found)
         
-        self.theta, self.loss_history, _ = self.gradient_descent_engine(X_all_s, y_all_s, self.best_epoch_found)
-        
-        Xb_all = np.c_[np.ones(len(y_all_s)), X_all_s].astype('float32')
-        final_y_pred_scaled = (Xb_all @ self.theta).reshape(-1, 1)
-        self.y_pred = self.scaler_y.inverse_transform(final_y_pred_scaled).flatten()
+        Xb = np.c_[np.ones(len(y_scaled)), X_scaled].astype('float32')
+        y_pred_scaled = (Xb @ self.theta).reshape(-1, 1)
+        self.y_pred = self.inverse_scale(y_pred_scaled, self.stats_y).flatten()
         self.y = self.df[self.y.name]
 
         print("Model Features:", *self.feature_names, sep='\n')
         if self.loss_history:
-            print("Final Training MSE=", self.loss_history[-1])
+            print(f"Final Training MSE= {self.loss_history[-1]:.6f}")
         gc.collect()
 
+    def evaluate_model(self):
+        if not hasattr(self, 'y_pred') or len(self.loss_history) == 0: return
+        r_matrix = np.corrcoef(self.y, self.y_pred)
+        self.model_correlation = r_matrix[0, 1]
+        print(f"Model Correlation (R): {self.model_correlation:.4f}")
+        self.r_squared = self.model_correlation**2
+        print(f"R-Squared: {self.r_squared:.4f}")
+        
+        safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        metrics_file = os.path.join(self.dataset_folder, f"model_metrics_{safe_timestamp}.txt")
+        with open(metrics_file, "w") as f:
+            f.write(f"Timestamp: {datetime.datetime.now()}\n")
+            f.write(f"Dataset: {self.current_filename}\n")
+            f.write(f"Bin: {self.current_bin_name}\n")
+            f.write("-" * 30 + "\n")
+            f.write(f"R-Value: {self.model_correlation:.4f}\n")
+            f.write(f"R-Squared: {self.r_squared:.4f}\n")
+            f.write(f"Final MSE: {self.loss_history[-1]:.6f}\n")
+            f.write(f"Best Epoch: {self.best_epoch_found}\n")
+            f.write("\nFeature Importances (Standardized Beta Weights):\n")
+            for name, weight in zip(self.feature_names, self.theta[1:].flatten()):
+                f.write(f"  {name}: {float(weight):.4f}\n")
     def plot(self):
         if not hasattr(self, 'y_pred') or len(self.loss_history) == 0: return
         sns.set_theme(style="darkgrid")
@@ -258,7 +267,7 @@ class LinearRegressionModel:
 
         indices = np.arange(len(self.y_pred))
         if len(self.y_pred) > 50000:
-            indices = np.random.choice(len(self.y_pred), 20000, replace=False)
+            indices = np.random.choice(len(self.y_pred), 50000, replace=False)
             
         x_pred_raw = self.y_pred[indices]
         y_actual_raw = self.y.values[indices]
@@ -295,7 +304,7 @@ class LinearRegressionModel:
         axes["Importance"].set_title("Feature Importance", fontsize=14)
         axes["Importance"].axvline(x=0, color='black', linestyle='-', linewidth=0.5)
 
-        axes["Actual_vs_Pred"].scatter(y_actual_raw, x_pred_raw, alpha=0.5, s=15, color='royalblue', edgecolor='none')
+        axes["Actual_vs_Pred"].scatter(y_actual_raw, x_pred_raw, c=z_val[idx], cmap="mako", s=20, alpha=0.9, edgecolor='none')
         lims = [np.min([axes["Actual_vs_Pred"].get_xlim(), axes["Actual_vs_Pred"].get_ylim()]), 
                 np.max([axes["Actual_vs_Pred"].get_xlim(), axes["Actual_vs_Pred"].get_ylim()])]
         axes["Actual_vs_Pred"].plot(lims, lims, 'r--', alpha=0.75, zorder=3, linewidth=2)
@@ -310,28 +319,6 @@ class LinearRegressionModel:
         del fig, axes
         gc.collect()
 
-    def evaluate_model(self):
-        if len(self.loss_history) == 0: return
-        r_matrix = np.corrcoef(self.y, self.y_pred)
-        self.model_correlation = r_matrix[0, 1]
-        print(f"Model Correlation (R): {self.model_correlation:.4f}")
-        self.r_squared = self.model_correlation**2
-        print(f"R-Squared: {self.r_squared:.4f}")
-        
-        safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        metrics_file = os.path.join(self.dataset_folder, f"model_metrics_{safe_timestamp}.txt")
-        with open(metrics_file, "w") as f:
-            f.write(f"Timestamp: {datetime.datetime.now()}\n")
-            f.write(f"Dataset: {self.current_filename}\n")
-            f.write(f"Bin: {self.current_bin_name}\n")
-            f.write("-" * 30 + "\n")
-            f.write(f"R-Value: {self.model_correlation:.4f}\n")
-            f.write(f"R-Squared: {self.r_squared:.4f}\n")
-            f.write(f"Final MSE: {self.loss_history[-1]:.6f}\n")
-            f.write(f"Best Epoch: {self.best_epoch_found}\n")
-            f.write("\nFeature Importances (Standardized Beta Weights):\n")
-            for name, weight in zip(self.feature_names, self.theta[1:].flatten()):
-                f.write(f"  {name}: {float(weight):.4f}\n")
 
     def show_feature_importance(self):
         if len(self.loss_history) == 0: return
