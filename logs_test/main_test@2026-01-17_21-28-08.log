@@ -1,0 +1,343 @@
+
+[21:28:08] ----- Model for USA_Housing.csv -----
+[21:28:08] Initial dataset contains 5000 valid datapoints
+[21:28:08] Bin Thresholds: Low < 1074427.82, Mid < 1381501.13, High >= 1381501.13
+
+[21:28:08] ==================== ANALYZING BIN: Low-Tier ====================
+[21:28:08] Step 1: Splitting data to identify optimal trend duration...
+[21:28:08] Optimal trend identified at epoch: 326
+[21:28:08] Step 2: Training final model on 100% data for 326 epochs...
+[21:28:08] Model Features:
+[21:28:08] Area Population
+[21:28:08] Avg. Area House Age
+[21:28:08] Avg. Area Income
+[21:28:08] Avg. Area Number of Bedrooms
+[21:28:08] Avg. Area Number of Rooms
+[21:28:08] Final Training MSE= 0.28970882495104966
+[21:28:08] Model Correlation (R): 0.8437
+[21:28:08] R-Squared: 0.7118
+
+[21:28:08] --- Feature Importance (Beta Values) ---
+[21:28:08] Area Population: 0.6772
+[21:28:08] Avg. Area House Age: 0.7360
+[21:28:08] Avg. Area Income: 0.9174
+[21:28:08] Avg. Area Number of Bedrooms: 0.0187
+[21:28:08] Avg. Area Number of Rooms: 0.5356
+
+[21:28:10] ==================== ANALYZING BIN: Mid-Tier ====================
+[21:28:10] Step 1: Splitting data to identify optimal trend duration...
+[21:28:10] Optimal trend identified at epoch: 476
+[21:28:10] Step 2: Training final model on 100% data for 476 epochs...
+[21:28:10] Model Features:
+[21:28:10] Area Population
+[21:28:10] Avg. Area House Age
+[21:28:10] Avg. Area Income
+[21:28:10] Avg. Area Number of Bedrooms
+[21:28:10] Avg. Area Number of Rooms
+[21:28:10] Final Training MSE= 0.5955389050421912
+[21:28:10] Model Correlation (R): 0.6376
+[21:28:10] R-Squared: 0.4066
+
+[21:28:10] --- Feature Importance (Beta Values) ---
+[21:28:10] Area Population: 0.7711
+[21:28:10] Avg. Area House Age: 0.8227
+[21:28:10] Avg. Area Income: 0.9789
+[21:28:10] Avg. Area Number of Bedrooms: 0.0035
+[21:28:10] Avg. Area Number of Rooms: 0.6475
+
+[21:28:11] ==================== ANALYZING BIN: High-Tier ====================
+[21:28:11] Step 1: Splitting data to identify optimal trend duration...
+[21:28:11] Optimal trend identified at epoch: 603
+[21:28:11] Step 2: Training final model on 100% data for 603 epochs...
+[21:28:11] Model Features:
+[21:28:11] Area Population
+[21:28:11] Avg. Area House Age
+[21:28:11] Avg. Area Income
+[21:28:11] Avg. Area Number of Bedrooms
+[21:28:11] Avg. Area Number of Rooms
+[21:28:11] Final Training MSE= 0.23703783899318148
+[21:28:11] Model Correlation (R): 0.8735
+[21:28:11] R-Squared: 0.7630
+
+[21:28:11] --- Feature Importance (Beta Values) ---
+[21:28:11] Area Population: 0.6275
+[21:28:11] Avg. Area House Age: 0.6723
+[21:28:11] Avg. Area Income: 0.8667
+[21:28:11] Avg. Area Number of Bedrooms: -0.0013
+[21:28:11] Avg. Area Number of Rooms: 0.5207
+
+[21:28:13] ----- Model for USA_Housing.csv -----
+[21:28:13] Initial dataset contains 5000 valid datapoints
+[21:28:13] Step 1: Splitting data to identify optimal trend duration...
+[21:28:13] Optimal trend identified at epoch: 270
+[21:28:13] Step 2: Training final model on 100% data for 270 epochs...
+[21:28:13] Model Features:
+[21:28:13] Area Population
+[21:28:13] Avg. Area House Age
+[21:28:13] Avg. Area Income
+[21:28:13] Avg. Area Number of Bedrooms
+[21:28:13] Avg. Area Number of Rooms
+[21:28:13] Final Training MSE= 0.08496165601725887
+[21:28:13] Model Correlation (R): 0.9566
+[21:28:13] R-Squared: 0.9151
+
+[21:28:13] --- Feature Importance (Beta Values) ---
+[21:28:13] Area Population: 0.4390
+[21:28:13] Avg. Area House Age: 0.4754
+[21:28:13] Avg. Area Income: 0.6579
+[21:28:13] Avg. Area Number of Bedrooms: 0.0191
+[21:28:13] Avg. Area Number of Rooms: 0.3364
+
+[21:28:14] ----- Model for kc_house_data.csv -----
+[21:28:15] Initial dataset contains 21613 valid datapoints
+[21:28:15] Bin Thresholds: Low < 360000.00, Mid < 560000.00, High >= 560000.00
+
+[21:28:15] ==================== ANALYZING BIN: Low-Tier ====================
+[21:28:15] Step 1: Splitting data to identify optimal trend duration...
+[21:28:15] Optimal trend identified at epoch: 1447
+[21:28:15] Step 2: Training final model on 100% data for 1447 epochs...
+[21:28:15] Model Features:
+[21:28:15] bathrooms
+[21:28:15] bedrooms
+[21:28:15] condition
+[21:28:15] floors
+[21:28:15] grade
+[21:28:15] lat
+[21:28:15] long
+[21:28:15] sqft_above
+[21:28:15] sqft_basement
+[21:28:15] sqft_living
+[21:28:15] sqft_lot
+[21:28:15] sqft_lot15
+[21:28:15] view
+[21:28:15] waterfront
+[21:28:15] yr_built
+[21:28:15] yr_renovated
+[21:28:15] Final Training MSE= 0.5720645729220108
+[21:28:15] Model Correlation (R): 0.6542
+[21:28:15] R-Squared: 0.4279
+
+[21:28:15] --- Feature Importance (Beta Values) ---
+[21:28:15] bathrooms: 0.1206
+[21:28:15] bedrooms: -0.0587
+[21:28:15] condition: 0.1109
+[21:28:15] floors: 0.0219
+[21:28:15] grade: 0.1937
+[21:28:15] lat: 0.5230
+[21:28:15] long: 0.0334
+[21:28:15] sqft_above: 0.3937
+[21:28:15] sqft_basement: 0.2169
+[21:28:15] sqft_living: -0.0261
+[21:28:15] sqft_lot: 0.0331
+[21:28:15] sqft_lot15: 0.0284
+[21:28:15] view: 0.0790
+[21:28:15] waterfront: 0.0214
+[21:28:15] yr_built: 0.0758
+[21:28:15] yr_renovated: 0.0220
+
+[21:28:17] ==================== ANALYZING BIN: Mid-Tier ====================
+[21:28:17] Step 1: Splitting data to identify optimal trend duration...
+[21:28:17] Optimal trend identified at epoch: 5687
+[21:28:17] Step 2: Training final model on 100% data for 5687 epochs...
+[21:28:17] Model Features:
+[21:28:17] bathrooms
+[21:28:17] bedrooms
+[21:28:17] condition
+[21:28:17] floors
+[21:28:17] grade
+[21:28:17] lat
+[21:28:17] long
+[21:28:17] sqft_above
+[21:28:17] sqft_basement
+[21:28:17] sqft_living
+[21:28:17] sqft_lot
+[21:28:17] sqft_lot15
+[21:28:17] view
+[21:28:17] waterfront
+[21:28:17] yr_built
+[21:28:17] yr_renovated
+[21:28:17] Final Training MSE= 0.8511767962387836
+[21:28:17] Model Correlation (R): 0.3858
+[21:28:17] R-Squared: 0.1488
+
+[21:28:17] --- Feature Importance (Beta Values) ---
+[21:28:17] bathrooms: 0.0895
+[21:28:17] bedrooms: -0.0828
+[21:28:17] condition: 0.0237
+[21:28:17] floors: 0.1027
+[21:28:17] grade: 0.2582
+[21:28:17] lat: 0.2994
+[21:28:17] long: 0.0845
+[21:28:17] sqft_above: 0.3184
+[21:28:17] sqft_basement: 0.2354
+[21:28:17] sqft_living: -0.1362
+[21:28:17] sqft_lot: 0.0389
+[21:28:17] sqft_lot15: 0.0111
+[21:28:17] view: 0.0617
+[21:28:17] waterfront: 0.0119
+[21:28:17] yr_built: -0.2884
+[21:28:17] yr_renovated: -0.0093
+
+[21:28:19] ==================== ANALYZING BIN: High-Tier ====================
+[21:28:19] Step 1: Splitting data to identify optimal trend duration...
+[21:28:19] Optimal trend identified at epoch: 647
+[21:28:19] Step 2: Training final model on 100% data for 647 epochs...
+[21:28:19] Model Features:
+[21:28:19] bathrooms
+[21:28:19] bedrooms
+[21:28:19] condition
+[21:28:19] floors
+[21:28:19] grade
+[21:28:19] lat
+[21:28:19] long
+[21:28:19] sqft_above
+[21:28:19] sqft_basement
+[21:28:19] sqft_living
+[21:28:19] sqft_lot
+[21:28:19] sqft_lot15
+[21:28:19] view
+[21:28:19] waterfront
+[21:28:19] yr_built
+[21:28:19] yr_renovated
+[21:28:19] Final Training MSE= 0.41416823978237094
+[21:28:19] Model Correlation (R): 0.7654
+[21:28:19] R-Squared: 0.5858
+
+[21:28:19] --- Feature Importance (Beta Values) ---
+[21:28:19] bathrooms: 0.0510
+[21:28:19] bedrooms: -0.0427
+[21:28:19] condition: 0.0752
+[21:28:19] floors: -0.0504
+[21:28:19] grade: 0.3158
+[21:28:19] lat: 0.0978
+[21:28:19] long: -0.1788
+[21:28:19] sqft_above: 0.4521
+[21:28:19] sqft_basement: 0.1992
+[21:28:19] sqft_living: 0.0400
+[21:28:19] sqft_lot: 0.0294
+[21:28:19] sqft_lot15: -0.0529
+[21:28:19] view: 0.0840
+[21:28:19] waterfront: 0.1980
+[21:28:19] yr_built: -0.1316
+[21:28:19] yr_renovated: 0.0489
+
+[21:28:21] ----- Model for kc_house_data.csv -----
+[21:28:21] Initial dataset contains 21613 valid datapoints
+[21:28:21] Step 1: Splitting data to identify optimal trend duration...
+[21:28:21] Optimal trend identified at epoch: 1438
+[21:28:21] Step 2: Training final model on 100% data for 1438 epochs...
+[21:28:22] Model Features:
+[21:28:22] bathrooms
+[21:28:22] bedrooms
+[21:28:22] condition
+[21:28:22] floors
+[21:28:22] grade
+[21:28:22] lat
+[21:28:22] long
+[21:28:22] sqft_above
+[21:28:22] sqft_basement
+[21:28:22] sqft_living
+[21:28:22] sqft_lot
+[21:28:22] sqft_lot15
+[21:28:22] view
+[21:28:22] waterfront
+[21:28:22] yr_built
+[21:28:22] yr_renovated
+[21:28:22] Final Training MSE= 0.3132387578233928
+[21:28:22] Model Correlation (R): 0.8287
+[21:28:22] R-Squared: 0.6868
+
+[21:28:22] --- Feature Importance (Beta Values) ---
+[21:28:22] bathrooms: 0.0686
+[21:28:22] bedrooms: -0.0410
+[21:28:22] condition: 0.0865
+[21:28:22] floors: 0.0643
+[21:28:22] grade: 0.3969
+[21:28:22] lat: 0.3652
+[21:28:22] long: 0.0105
+[21:28:22] sqft_above: 0.3663
+[21:28:22] sqft_basement: 0.1827
+[21:28:22] sqft_living: -0.0263
+[21:28:22] sqft_lot: 0.0403
+[21:28:22] sqft_lot15: -0.0134
+[21:28:22] view: 0.1046
+[21:28:22] waterfront: 0.0298
+[21:28:22] yr_built: -0.2334
+[21:28:22] yr_renovated: 0.0224
+
+[21:28:24] ----- Model for realtor-data.csv -----
+[21:28:28] Initial dataset contains 2224561 valid datapoints
+[21:28:28] Bin Thresholds: Low < 219900.00, Mid < 449000.00, High >= 449000.00
+
+[21:28:28] ==================== ANALYZING BIN: Low-Tier ====================
+[21:28:29] Step 1: Splitting data to identify optimal trend duration...
+[21:29:30] Optimal trend identified at epoch: 13352
+[21:29:30] Step 2: Training final model on 100% data for 13352 epochs...
+[21:29:32] Model Features:
+[21:29:32] acre_lot
+[21:29:32] bath
+[21:29:32] bed
+[21:29:32] brokered_by
+[21:29:32] house_size
+[21:29:32] zip_code
+[21:29:32] Final Training MSE= 0.938542802166348
+[21:29:32] Model Correlation (R): 0.2479
+[21:29:32] R-Squared: 0.0615
+
+[21:29:32] --- Feature Importance (Beta Values) ---
+[21:29:32] acre_lot: 0.0003
+[21:29:32] bath: 0.2464
+[21:29:32] bed: 0.0004
+[21:29:32] brokered_by: 0.0026
+[21:29:32] house_size: -0.0080
+[21:29:32] zip_code: 0.0156
+
+[21:29:34] ==================== ANALYZING BIN: Mid-Tier ====================
+[21:29:34] Step 1: Splitting data to identify optimal trend duration...
+[21:29:37] Optimal trend identified at epoch: 282
+[21:29:37] Step 2: Training final model on 100% data for 282 epochs...
+[21:29:39] Model Features:
+[21:29:39] acre_lot
+[21:29:39] bath
+[21:29:39] bed
+[21:29:39] brokered_by
+[21:29:39] house_size
+[21:29:39] zip_code
+[21:29:39] Final Training MSE= 0.9522221390890854
+[21:29:39] Model Correlation (R): 0.2187
+[21:29:39] R-Squared: 0.0478
+
+[21:29:39] --- Feature Importance (Beta Values) ---
+[21:29:39] acre_lot: 0.0057
+[21:29:39] bath: 0.1962
+[21:29:39] bed: -0.0113
+[21:29:39] brokered_by: 0.0025
+[21:29:39] house_size: 0.0239
+[21:29:39] zip_code: 0.1110
+
+[21:29:41] ==================== ANALYZING BIN: High-Tier ====================
+[21:29:41] Step 1: Splitting data to identify optimal trend duration...
+[21:29:50] Optimal trend identified at epoch: 762
+[21:29:50] Step 2: Training final model on 100% data for 762 epochs...
+[21:29:55] Model Features:
+[21:29:55] acre_lot
+[21:29:55] bath
+[21:29:55] bed
+[21:29:55] brokered_by
+[21:29:55] house_size
+[21:29:55] zip_code
+[21:29:55] Final Training MSE= 0.8663044991326591
+[21:29:55] Model Correlation (R): 0.3657
+[21:29:55] R-Squared: 0.1337
+
+[21:29:55] --- Feature Importance (Beta Values) ---
+[21:29:55] acre_lot: 0.0206
+[21:29:55] bath: 0.3892
+[21:29:55] bed: -0.1072
+[21:29:55] brokered_by: -0.0159
+[21:29:55] house_size: 0.0935
+[21:29:55] zip_code: 0.0727
+
+[21:29:57] ----- Model for realtor-data.csv -----
+[21:30:01] Initial dataset contains 2224561 valid datapoints
+[21:30:02] Step 1: Splitting data to identify optimal trend duration...

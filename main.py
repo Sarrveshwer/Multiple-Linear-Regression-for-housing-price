@@ -11,6 +11,7 @@ import sys
 import datetime
 import os
 import traceback
+import gc
 
 sns.set_style('ticks') 
 
@@ -116,6 +117,10 @@ class LinearRegressionModel:
             
         self.df = pd.read_csv(filename).drop_duplicates()
         
+        if len(self.df) > 2000000:
+            print("Dataset too large, sampling 1,000,000 rows to optimize RAM...")
+            self.df = self.df.sample(n=2000000, random_state=42).reset_index(drop=True)
+
         actual_col = [col for col in self.df.columns if column.lower() == col.lower()]
         if not actual_col:
             actual_col = [col for col in self.df.columns if column.lower() in col.lower()]
@@ -131,17 +136,24 @@ class LinearRegressionModel:
         self.df = self.df.dropna(subset=[column]).reset_index(drop=True)
         self.df = self.df[self.df[column] > 0].reset_index(drop=True)
         
+        for col in self.df.select_dtypes(include=['float64']).columns:
+            self.df[col] = self.df[col].astype('float32')
+        for col in self.df.select_dtypes(include=['int64']).columns:
+            self.df[col] = self.df[col].astype('int32')
+
         self.y = self.df[column]
         self.m = len(self.y)
         print(f"Initial dataset contains {self.m} valid datapoints")
         
         exclude_cols = [column] + exclude
         self.feature_names = self.df.select_dtypes(include=['number']).columns.difference(exclude_cols).tolist()
+        gc.collect()
 
     def gradient_descent_engine(self, X_scaled, y_scaled, max_epochs, val_data=None):
         m = len(y_scaled)
-        Xb = np.c_[np.ones(m), X_scaled]
-        theta = np.ones((Xb.shape[1],1))
+        if m == 0: return np.ones((X_scaled.shape[1] + 1, 1)), [], 0
+        Xb = np.c_[np.ones(m), X_scaled].astype('float32')
+        theta = np.ones((Xb.shape[1],1), dtype='float32')
         
         initial_alpha = 0.01  
         decay = 0.001 
@@ -158,14 +170,19 @@ class LinearRegressionModel:
             y_pred_scaled = (Xb @ theta).reshape(-1) 
             e = y_pred_scaled - y_scaled
             mse = np.mean(e**2)
+            
+            if np.isnan(mse) or np.isinf(mse):
+                print(f"Divergence detected at epoch {i}. Stopping.")
+                break
+
             local_loss_history.append(mse)
             
             gradJ = (2/m) * (Xb.T @ e.reshape(-1, 1))
-            theta = theta - alpha * gradJ  
+            theta = theta - np.float32(alpha) * gradJ  
             
             if val_data is not None:
                 X_val_scaled, y_val_scaled = val_data
-                Xb_val = np.c_[np.ones(len(y_val_scaled)), X_val_scaled]
+                Xb_val = np.c_[np.ones(len(y_val_scaled)), X_val_scaled].astype('float32')
                 val_mse = np.mean(((Xb_val @ theta).reshape(-1) - y_val_scaled)**2)
                 
                 if val_mse < best_val_mse:
@@ -189,8 +206,14 @@ class LinearRegressionModel:
         return best_theta, local_loss_history, best_epoch
 
     def Linear_regression(self):
-        X = self.df[self.feature_names].values
-        y = self.y.values.reshape(-1, 1)
+        self.df = self.df.dropna(subset=self.feature_names).reset_index(drop=True)
+        if self.df.empty:
+            print("Dataframe is empty after dropna!")
+            self.loss_history = []
+            return
+
+        X = self.df[self.feature_names].values.astype('float32')
+        y = self.df[self.y.name].values.reshape(-1, 1).astype('float32')
 
         print("Step 1: Splitting data to identify optimal trend duration...")
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -201,6 +224,7 @@ class LinearRegressionModel:
         y_te_s = self.scaler_y.transform(y_test).flatten()
 
         _, _, self.best_epoch_found = self.gradient_descent_engine(X_tr_s, y_tr_s, len(y_tr_s), val_data=(X_te_s, y_te_s))
+        self.best_epoch_found = max(1, self.best_epoch_found)
         print(f"Optimal trend identified at epoch: {self.best_epoch_found}")
 
         print(f"Step 2: Training final model on 100% data for {self.best_epoch_found} epochs...")
@@ -209,14 +233,18 @@ class LinearRegressionModel:
         
         self.theta, self.loss_history, _ = self.gradient_descent_engine(X_all_s, y_all_s, self.best_epoch_found)
         
-        Xb_all = np.c_[np.ones(len(y_all_s)), X_all_s]
+        Xb_all = np.c_[np.ones(len(y_all_s)), X_all_s].astype('float32')
         final_y_pred_scaled = (Xb_all @ self.theta).reshape(-1, 1)
         self.y_pred = self.scaler_y.inverse_transform(final_y_pred_scaled).flatten()
+        self.y = self.df[self.y.name]
 
         print("Model Features:", *self.feature_names, sep='\n')
-        print("Final Training MSE=", self.loss_history[-1])
+        if self.loss_history:
+            print("Final Training MSE=", self.loss_history[-1])
+        gc.collect()
 
     def plot(self):
+        if not hasattr(self, 'y_pred') or len(self.loss_history) == 0: return
         sns.set_theme(style="darkgrid")
         safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         
@@ -279,8 +307,11 @@ class LinearRegressionModel:
         save_name = f"Dashboard_{self.current_bin_name}_{safe_timestamp}.png"
         plt.savefig(os.path.join(self.dataset_folder, save_name), dpi=300, bbox_inches='tight')
         plt.close(fig)
+        del fig, axes
+        gc.collect()
 
     def evaluate_model(self):
+        if len(self.loss_history) == 0: return
         r_matrix = np.corrcoef(self.y, self.y_pred)
         self.model_correlation = r_matrix[0, 1]
         print(f"Model Correlation (R): {self.model_correlation:.4f}")
@@ -303,6 +334,7 @@ class LinearRegressionModel:
                 f.write(f"  {name}: {float(weight):.4f}\n")
 
     def show_feature_importance(self):
+        if len(self.loss_history) == 0: return
         print("\n--- Feature Importance (Beta Values) ---")
         for name, weight in zip(self.feature_names, self.theta[1:].flatten()):
             print(f"{name}: {float(weight):.4f}")
@@ -310,11 +342,12 @@ class LinearRegressionModel:
     def run(self,filename,column,exclude):
         self.current_bin_name = "Full_Data"
         self.dataset(filename,column,exclude)
-        Q1 = self.df[self.y.name].quantile(0.25)
-        Q3 = self.df[self.y.name].quantile(0.75)
+        target_name = self.y.name
+        Q1 = self.df[target_name].quantile(0.25)
+        Q3 = self.df[target_name].quantile(0.75)
         IQR = Q3 - Q1
-        self.df = self.df[self.df[self.y.name] <= (Q3 + 1.5 * IQR)].reset_index(drop=True)
-        self.y = self.df[self.y.name]
+        self.df = self.df[self.df[target_name] <= (Q3 + 1.5 * IQR)].reset_index(drop=True)
+        self.y = self.df[target_name]
         self.Linear_regression()
         self.evaluate_model()
         self.show_feature_importance()
@@ -350,15 +383,17 @@ class LinearRegressionModel:
                 IQR = Q3 - Q1
                 self.df = data_segment[(data_segment[target_name] >= (Q1 - 1.5 * IQR)) & (data_segment[target_name] <= (Q3 + 1.5 * IQR))].copy().reset_index(drop=True)
             else:
-                self.df = data_segment
+                self.df = data_segment.copy()
             self.y = self.df[target_name]
             self.m = len(self.y)
             self.Linear_regression()
             self.evaluate_model()
             self.show_feature_importance()
             self.plot()
+        del self.bins
         self.df = original_full_df
         self.run(filename,column,exclude)
+        gc.collect()
 
 if __name__ == "__main__":
     Model=LinearRegressionModel()

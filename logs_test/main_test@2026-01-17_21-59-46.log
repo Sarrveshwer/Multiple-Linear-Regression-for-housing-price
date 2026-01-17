@@ -1,0 +1,486 @@
+
+[21:59:46] ----- Model for USA_Housing.csv -----
+[21:59:46] Initial dataset contains 5000 valid datapoints
+[21:59:46] Bin Thresholds: Low < 1074427.79, Mid < 1381501.07, High >= 1381501.07
+
+[21:59:46] ==================== ANALYZING BIN: Low-Tier ====================
+[21:59:46] Step 1: Splitting data to identify optimal trend duration...
+[21:59:46] Optimal trend identified at epoch: 326
+[21:59:46] Step 2: Training final model on 100% data for 326 epochs...
+[21:59:46] Model Features:
+[21:59:46] Area Population
+[21:59:46] Avg. Area House Age
+[21:59:46] Avg. Area Income
+[21:59:46] Avg. Area Number of Bedrooms
+[21:59:46] Avg. Area Number of Rooms
+[21:59:46] Final Training MSE= 0.2897088
+[21:59:46] Model Correlation (R): 0.8437
+[21:59:46] R-Squared: 0.7118
+
+[21:59:46] --- Feature Importance (Beta Values) ---
+[21:59:46] Area Population: 0.6772
+[21:59:46] Avg. Area House Age: 0.7360
+[21:59:46] Avg. Area Income: 0.9174
+[21:59:46] Avg. Area Number of Bedrooms: 0.0187
+[21:59:46] Avg. Area Number of Rooms: 0.5356
+
+[21:59:48] ==================== ANALYZING BIN: Mid-Tier ====================
+[21:59:48] Step 1: Splitting data to identify optimal trend duration...
+[21:59:48] Optimal trend identified at epoch: 476
+[21:59:48] Step 2: Training final model on 100% data for 476 epochs...
+[21:59:48] Model Features:
+[21:59:48] Area Population
+[21:59:48] Avg. Area House Age
+[21:59:48] Avg. Area Income
+[21:59:48] Avg. Area Number of Bedrooms
+[21:59:48] Avg. Area Number of Rooms
+[21:59:48] Final Training MSE= 0.595539
+[21:59:48] Model Correlation (R): 0.6376
+[21:59:48] R-Squared: 0.4066
+
+[21:59:48] --- Feature Importance (Beta Values) ---
+[21:59:48] Area Population: 0.7711
+[21:59:48] Avg. Area House Age: 0.8227
+[21:59:48] Avg. Area Income: 0.9789
+[21:59:48] Avg. Area Number of Bedrooms: 0.0035
+[21:59:48] Avg. Area Number of Rooms: 0.6475
+
+[21:59:50] ==================== ANALYZING BIN: High-Tier ====================
+[21:59:50] Step 1: Splitting data to identify optimal trend duration...
+[21:59:50] Optimal trend identified at epoch: 599
+[21:59:50] Step 2: Training final model on 100% data for 599 epochs...
+[21:59:50] Model Features:
+[21:59:50] Area Population
+[21:59:50] Avg. Area House Age
+[21:59:50] Avg. Area Income
+[21:59:50] Avg. Area Number of Bedrooms
+[21:59:50] Avg. Area Number of Rooms
+[21:59:50] Final Training MSE= 0.23703976
+[21:59:50] Model Correlation (R): 0.8735
+[21:59:50] R-Squared: 0.7630
+
+[21:59:50] --- Feature Importance (Beta Values) ---
+[21:59:50] Area Population: 0.6276
+[21:59:50] Avg. Area House Age: 0.6724
+[21:59:50] Avg. Area Income: 0.8668
+[21:59:50] Avg. Area Number of Bedrooms: -0.0013
+[21:59:50] Avg. Area Number of Rooms: 0.5208
+
+[21:59:52] ----- Model for USA_Housing.csv -----
+[21:59:52] Initial dataset contains 5000 valid datapoints
+[21:59:52] Step 1: Splitting data to identify optimal trend duration...
+[21:59:52] Optimal trend identified at epoch: 269
+[21:59:52] Step 2: Training final model on 100% data for 269 epochs...
+[21:59:52] Model Features:
+[21:59:52] Area Population
+[21:59:52] Avg. Area House Age
+[21:59:52] Avg. Area Income
+[21:59:52] Avg. Area Number of Bedrooms
+[21:59:52] Avg. Area Number of Rooms
+[21:59:52] Final Training MSE= 0.084969044
+[21:59:52] Model Correlation (R): 0.9566
+[21:59:52] R-Squared: 0.9151
+
+[21:59:52] --- Feature Importance (Beta Values) ---
+[21:59:52] Area Population: 0.4391
+[21:59:52] Avg. Area House Age: 0.4754
+[21:59:52] Avg. Area Income: 0.6579
+[21:59:52] Avg. Area Number of Bedrooms: 0.0192
+[21:59:52] Avg. Area Number of Rooms: 0.3363
+
+[21:59:54] ----- Model for kc_house_data.csv -----
+[21:59:54] Initial dataset contains 21613 valid datapoints
+[21:59:54] Bin Thresholds: Low < 360000.00, Mid < 560000.00, High >= 560000.00
+
+[21:59:54] ==================== ANALYZING BIN: Low-Tier ====================
+[21:59:54] Step 1: Splitting data to identify optimal trend duration...
+[21:59:54] Optimal trend identified at epoch: 1358
+[21:59:54] Step 2: Training final model on 100% data for 1358 epochs...
+[21:59:54] Model Features:
+[21:59:54] bathrooms
+[21:59:54] bedrooms
+[21:59:54] condition
+[21:59:54] floors
+[21:59:54] grade
+[21:59:54] lat
+[21:59:54] long
+[21:59:54] sqft_above
+[21:59:54] sqft_basement
+[21:59:54] sqft_living
+[21:59:54] sqft_lot
+[21:59:54] sqft_lot15
+[21:59:54] view
+[21:59:54] waterfront
+[21:59:54] yr_built
+[21:59:54] yr_renovated
+[21:59:54] Final Training MSE= 0.57205653
+[21:59:54] Model Correlation (R): 0.6542
+[21:59:54] R-Squared: 0.4279
+
+[21:59:54] --- Feature Importance (Beta Values) ---
+[21:59:54] bathrooms: 0.1221
+[21:59:54] bedrooms: -0.0590
+[21:59:54] condition: 0.1107
+[21:59:54] floors: 0.0215
+[21:59:54] grade: 0.1940
+[21:59:54] lat: 0.5230
+[21:59:54] long: 0.0335
+[21:59:54] sqft_above: 0.3935
+[21:59:54] sqft_basement: 0.2165
+[21:59:54] sqft_living: -0.0264
+[21:59:54] sqft_lot: 0.0331
+[21:59:54] sqft_lot15: 0.0284
+[21:59:54] view: 0.0790
+[21:59:54] waterfront: 0.0215
+[21:59:54] yr_built: 0.0748
+[21:59:54] yr_renovated: 0.0219
+
+[21:59:56] ==================== ANALYZING BIN: Mid-Tier ====================
+[21:59:56] Step 1: Splitting data to identify optimal trend duration...
+[21:59:56] Optimal trend identified at epoch: 3967
+[21:59:56] Step 2: Training final model on 100% data for 3967 epochs...
+[21:59:56] Model Features:
+[21:59:56] bathrooms
+[21:59:56] bedrooms
+[21:59:56] condition
+[21:59:56] floors
+[21:59:56] grade
+[21:59:56] lat
+[21:59:56] long
+[21:59:56] sqft_above
+[21:59:56] sqft_basement
+[21:59:56] sqft_living
+[21:59:56] sqft_lot
+[21:59:56] sqft_lot15
+[21:59:56] view
+[21:59:56] waterfront
+[21:59:56] yr_built
+[21:59:56] yr_renovated
+[21:59:56] Final Training MSE= 0.8511599
+[21:59:56] Model Correlation (R): 0.3858
+[21:59:56] R-Squared: 0.1488
+
+[21:59:56] --- Feature Importance (Beta Values) ---
+[21:59:56] bathrooms: 0.0924
+[21:59:56] bedrooms: -0.0833
+[21:59:56] condition: 0.0231
+[21:59:56] floors: 0.1023
+[21:59:56] grade: 0.2589
+[21:59:56] lat: 0.2992
+[21:59:56] long: 0.0850
+[21:59:56] sqft_above: 0.3181
+[21:59:56] sqft_basement: 0.2348
+[21:59:56] sqft_living: -0.1370
+[21:59:56] sqft_lot: 0.0385
+[21:59:56] sqft_lot15: 0.0114
+[21:59:56] view: 0.0616
+[21:59:56] waterfront: 0.0120
+[21:59:56] yr_built: -0.2912
+[21:59:56] yr_renovated: -0.0099
+
+[21:59:58] ==================== ANALYZING BIN: High-Tier ====================
+[21:59:58] Step 1: Splitting data to identify optimal trend duration...
+[21:59:58] Optimal trend identified at epoch: 646
+[21:59:58] Step 2: Training final model on 100% data for 646 epochs...
+[21:59:58] Model Features:
+[21:59:58] bathrooms
+[21:59:58] bedrooms
+[21:59:58] condition
+[21:59:58] floors
+[21:59:58] grade
+[21:59:58] lat
+[21:59:58] long
+[21:59:58] sqft_above
+[21:59:58] sqft_basement
+[21:59:58] sqft_living
+[21:59:58] sqft_lot
+[21:59:58] sqft_lot15
+[21:59:58] view
+[21:59:58] waterfront
+[21:59:58] yr_built
+[21:59:58] yr_renovated
+[21:59:58] Final Training MSE= 0.41417766
+[21:59:59] Model Correlation (R): 0.7654
+[21:59:59] R-Squared: 0.5858
+
+[21:59:59] --- Feature Importance (Beta Values) ---
+[21:59:59] bathrooms: 0.0509
+[21:59:59] bedrooms: -0.0427
+[21:59:59] condition: 0.0753
+[21:59:59] floors: -0.0503
+[21:59:59] grade: 0.3158
+[21:59:59] lat: 0.0978
+[21:59:59] long: -0.1788
+[21:59:59] sqft_above: 0.4521
+[21:59:59] sqft_basement: 0.1992
+[21:59:59] sqft_living: 0.0400
+[21:59:59] sqft_lot: 0.0294
+[21:59:59] sqft_lot15: -0.0530
+[21:59:59] view: 0.0840
+[21:59:59] waterfront: 0.1980
+[21:59:59] yr_built: -0.1315
+[21:59:59] yr_renovated: 0.0490
+
+[22:00:00] ----- Model for kc_house_data.csv -----
+[22:00:00] Initial dataset contains 21613 valid datapoints
+[22:00:01] Step 1: Splitting data to identify optimal trend duration...
+[22:00:01] Optimal trend identified at epoch: 1432
+[22:00:01] Step 2: Training final model on 100% data for 1432 epochs...
+[22:00:01] Model Features:
+[22:00:01] bathrooms
+[22:00:01] bedrooms
+[22:00:01] condition
+[22:00:01] floors
+[22:00:01] grade
+[22:00:01] lat
+[22:00:01] long
+[22:00:01] sqft_above
+[22:00:01] sqft_basement
+[22:00:01] sqft_living
+[22:00:01] sqft_lot
+[22:00:01] sqft_lot15
+[22:00:01] view
+[22:00:01] waterfront
+[22:00:01] yr_built
+[22:00:01] yr_renovated
+[22:00:01] Final Training MSE= 0.31323987
+[22:00:01] Model Correlation (R): 0.8287
+[22:00:01] R-Squared: 0.6868
+
+[22:00:01] --- Feature Importance (Beta Values) ---
+[22:00:01] bathrooms: 0.0685
+[22:00:01] bedrooms: -0.0410
+[22:00:01] condition: 0.0865
+[22:00:01] floors: 0.0643
+[22:00:01] grade: 0.3969
+[22:00:01] lat: 0.3652
+[22:00:01] long: 0.0105
+[22:00:01] sqft_above: 0.3663
+[22:00:01] sqft_basement: 0.1828
+[22:00:01] sqft_living: -0.0262
+[22:00:01] sqft_lot: 0.0403
+[22:00:01] sqft_lot15: -0.0134
+[22:00:01] view: 0.1046
+[22:00:01] waterfront: 0.0298
+[22:00:01] yr_built: -0.2333
+[22:00:01] yr_renovated: 0.0224
+
+[22:00:03] ----- Model for realtor-data.csv -----
+[22:00:08] Dataset too large, sampling 1,000,000 rows to optimize RAM...
+[22:00:08] Initial dataset contains 999176 valid datapoints
+[22:00:08] Bin Thresholds: Low < 219900.00, Mid < 449500.00, High >= 449500.00
+
+[22:00:09] ==================== ANALYZING BIN: Low-Tier ====================
+[22:00:09] Step 1: Splitting data to identify optimal trend duration...
+[22:00:09] Optimal trend identified at epoch: 320
+[22:00:09] Step 2: Training final model on 100% data for 320 epochs...
+[22:00:09] Model Features:
+[22:00:09] acre_lot
+[22:00:09] bath
+[22:00:09] bed
+[22:00:09] brokered_by
+[22:00:09] house_size
+[22:00:09] zip_code
+[22:00:09] Final Training MSE= 0.93715066
+[22:00:09] Model Correlation (R): 0.2510
+[22:00:09] R-Squared: 0.0630
+
+[22:00:09] --- Feature Importance (Beta Values) ---
+[22:00:09] acre_lot: 0.0062
+[22:00:09] bath: 0.2560
+[22:00:09] bed: -0.0337
+[22:00:09] brokered_by: 0.0036
+[22:00:09] house_size: 0.0018
+[22:00:09] zip_code: 0.0193
+
+[22:00:11] ==================== ANALYZING BIN: Mid-Tier ====================
+[22:00:11] Step 1: Splitting data to identify optimal trend duration...
+[22:00:13] Optimal trend identified at epoch: 850
+[22:00:13] Step 2: Training final model on 100% data for 850 epochs...
+[22:00:13] Model Features:
+[22:00:13] acre_lot
+[22:00:13] bath
+[22:00:13] bed
+[22:00:13] brokered_by
+[22:00:13] house_size
+[22:00:13] zip_code
+[22:00:13] Final Training MSE= 0.9370624
+[22:00:13] Model Correlation (R): 0.2509
+[22:00:13] R-Squared: 0.0629
+
+[22:00:13] --- Feature Importance (Beta Values) ---
+[22:00:13] acre_lot: -0.0004
+[22:00:13] bath: 0.2064
+[22:00:13] bed: 0.0474
+[22:00:13] brokered_by: -0.0005
+[22:00:13] house_size: 0.0086
+[22:00:13] zip_code: 0.1165
+
+[22:00:15] ==================== ANALYZING BIN: High-Tier ====================
+[22:00:15] Step 1: Splitting data to identify optimal trend duration...
+[22:00:22] Optimal trend identified at epoch: 3532
+[22:00:22] Step 2: Training final model on 100% data for 3532 epochs...
+[22:00:23] Model Features:
+[22:00:23] acre_lot
+[22:00:23] bath
+[22:00:23] bed
+[22:00:23] brokered_by
+[22:00:23] house_size
+[22:00:23] zip_code
+[22:00:23] Final Training MSE= 0.8251015
+[22:00:23] Model Correlation (R): 0.4182
+[22:00:23] R-Squared: 0.1749
+
+[22:00:23] --- Feature Importance (Beta Values) ---
+[22:00:23] acre_lot: 0.0133
+[22:00:23] bath: 0.3551
+[22:00:23] bed: -0.1308
+[22:00:23] brokered_by: -0.0134
+[22:00:23] house_size: 0.2035
+[22:00:23] zip_code: 0.0855
+
+[22:00:25] ----- Model for realtor-data.csv -----
+[22:00:29] Dataset too large, sampling 1,000,000 rows to optimize RAM...
+[22:00:30] Initial dataset contains 999176 valid datapoints
+[22:00:30] Step 1: Splitting data to identify optimal trend duration...
+[22:00:34] Optimal trend identified at epoch: 644
+[22:00:34] Step 2: Training final model on 100% data for 644 epochs...
+[22:00:36] Model Features:
+[22:00:36] acre_lot
+[22:00:36] bath
+[22:00:36] bed
+[22:00:36] brokered_by
+[22:00:36] house_size
+[22:00:36] zip_code
+[22:00:36] Final Training MSE= 0.72931254
+[22:00:36] Model Correlation (R): 0.5203
+[22:00:36] R-Squared: 0.2707
+
+[22:00:36] --- Feature Importance (Beta Values) ---
+[22:00:36] acre_lot: -0.0017
+[22:00:36] bath: 0.4577
+[22:00:36] bed: 0.0194
+[22:00:36] brokered_by: -0.0003
+[22:00:36] house_size: 0.0270
+[22:00:36] zip_code: 0.2231
+
+[22:00:38] ----- Model for nyc-rolling-sales.csv -----
+[22:00:38] Initial dataset contains 59759 valid datapoints
+[22:00:38] Bin Thresholds: Low < 450000.00, Mid < 850000.00, High >= 850000.00
+
+[22:00:38] ==================== ANALYZING BIN: Low-Tier ====================
+[22:00:38] Step 1: Splitting data to identify optimal trend duration...
+[22:00:38] Optimal trend identified at epoch: 108
+[22:00:38] Step 2: Training final model on 100% data for 108 epochs...
+[22:00:38] Model Features:
+[22:00:38] BLOCK
+[22:00:38] BOROUGH
+[22:00:38] COMMERCIAL UNITS
+[22:00:38] LOT
+[22:00:38] RESIDENTIAL UNITS
+[22:00:38] TAX CLASS AT TIME OF SALE
+[22:00:38] TOTAL UNITS
+[22:00:38] YEAR BUILT
+[22:00:38] ZIP CODE
+[22:00:38] Final Training MSE= 1.1207148
+[22:00:38] Model Correlation (R): 0.0686
+[22:00:38] R-Squared: 0.0047
+
+[22:00:38] --- Feature Importance (Beta Values) ---
+[22:00:38] BLOCK: 0.1565
+[22:00:38] BOROUGH: 0.1667
+[22:00:38] COMMERCIAL UNITS: 0.1464
+[22:00:38] LOT: 0.2202
+[22:00:38] RESIDENTIAL UNITS: 0.1215
+[22:00:38] TAX CLASS AT TIME OF SALE: 0.0469
+[22:00:38] TOTAL UNITS: -0.1695
+[22:00:38] YEAR BUILT: 0.3444
+[22:00:38] ZIP CODE: -0.0560
+
+[22:00:40] ==================== ANALYZING BIN: Mid-Tier ====================
+[22:00:40] Step 1: Splitting data to identify optimal trend duration...
+[22:00:40] Optimal trend identified at epoch: 441
+[22:00:40] Step 2: Training final model on 100% data for 441 epochs...
+[22:00:40] Model Features:
+[22:00:40] BLOCK
+[22:00:40] BOROUGH
+[22:00:40] COMMERCIAL UNITS
+[22:00:40] LOT
+[22:00:40] RESIDENTIAL UNITS
+[22:00:40] TAX CLASS AT TIME OF SALE
+[22:00:40] TOTAL UNITS
+[22:00:40] YEAR BUILT
+[22:00:40] ZIP CODE
+[22:00:40] Final Training MSE= 0.9711391
+[22:00:40] Model Correlation (R): 0.1701
+[22:00:40] R-Squared: 0.0289
+
+[22:00:40] --- Feature Importance (Beta Values) ---
+[22:00:40] BLOCK: -0.1006
+[22:00:40] BOROUGH: -0.0543
+[22:00:40] COMMERCIAL UNITS: 0.0094
+[22:00:40] LOT: 0.0608
+[22:00:40] RESIDENTIAL UNITS: 0.0279
+[22:00:40] TAX CLASS AT TIME OF SALE: 0.0235
+[22:00:40] TOTAL UNITS: -0.0303
+[22:00:40] YEAR BUILT: 0.0170
+[22:00:40] ZIP CODE: 0.0721
+
+[22:00:42] ==================== ANALYZING BIN: High-Tier ====================
+[22:00:42] Step 1: Splitting data to identify optimal trend duration...
+[22:00:42] Optimal trend identified at epoch: 548
+[22:00:42] Step 2: Training final model on 100% data for 548 epochs...
+[22:00:42] Model Features:
+[22:00:42] BLOCK
+[22:00:42] BOROUGH
+[22:00:42] COMMERCIAL UNITS
+[22:00:42] LOT
+[22:00:42] RESIDENTIAL UNITS
+[22:00:42] TAX CLASS AT TIME OF SALE
+[22:00:42] TOTAL UNITS
+[22:00:42] YEAR BUILT
+[22:00:42] ZIP CODE
+[22:00:42] Final Training MSE= 0.9347456
+[22:00:43] Model Correlation (R): 0.2555
+[22:00:43] R-Squared: 0.0653
+
+[22:00:43] --- Feature Importance (Beta Values) ---
+[22:00:43] BLOCK: -0.0191
+[22:00:43] BOROUGH: -0.0241
+[22:00:43] COMMERCIAL UNITS: 0.1252
+[22:00:43] LOT: -0.0395
+[22:00:43] RESIDENTIAL UNITS: 0.1878
+[22:00:43] TAX CLASS AT TIME OF SALE: 0.1229
+[22:00:43] TOTAL UNITS: -0.0260
+[22:00:43] YEAR BUILT: 0.0098
+[22:00:43] ZIP CODE: -0.0152
+
+[22:00:44] ----- Model for nyc-rolling-sales.csv -----
+[22:00:45] Initial dataset contains 59759 valid datapoints
+[22:00:45] Step 1: Splitting data to identify optimal trend duration...
+[22:00:45] Optimal trend identified at epoch: 151
+[22:00:45] Step 2: Training final model on 100% data for 151 epochs...
+[22:00:45] Model Features:
+[22:00:45] BLOCK
+[22:00:45] BOROUGH
+[22:00:45] COMMERCIAL UNITS
+[22:00:45] LOT
+[22:00:45] RESIDENTIAL UNITS
+[22:00:45] TAX CLASS AT TIME OF SALE
+[22:00:45] TOTAL UNITS
+[22:00:45] YEAR BUILT
+[22:00:45] ZIP CODE
+[22:00:45] Final Training MSE= 0.9579193
+[22:00:45] Model Correlation (R): 0.2393
+[22:00:45] R-Squared: 0.0573
+
+[22:00:45] --- Feature Importance (Beta Values) ---
+[22:00:45] BLOCK: -0.0888
+[22:00:45] BOROUGH: -0.0787
+[22:00:45] COMMERCIAL UNITS: 0.1399
+[22:00:45] LOT: 0.2373
+[22:00:45] RESIDENTIAL UNITS: 0.1637
+[22:00:45] TAX CLASS AT TIME OF SALE: 0.0786
+[22:00:45] TOTAL UNITS: -0.1999
+[22:00:45] YEAR BUILT: 0.1735
+[22:00:45] ZIP CODE: -0.0281
