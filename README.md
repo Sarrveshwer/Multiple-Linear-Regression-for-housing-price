@@ -72,6 +72,17 @@ The model was tested across four distinct datasets representing varied market co
 
 ---
 
+## Datasets Used
+
+The following datasets were used to train and evaluate the model:
+
+1. **USA Housing**: [USA Housing Dataset (Kaggle)](https://www.kaggle.com/datasets/kanths028/usa-housing)
+2. **King County**: [House Sales in King County, USA (Kaggle)](https://www.kaggle.com/datasets/harlfoxem/housesalesprediction)
+3. **Realtor Data**: [USA Real Estate Dataset (Kaggle)](https://www.kaggle.com/datasets/ahmedshahriarsakib/usa-real-estate-dataset)
+4. **NYC Rolling Sales**: [NYC Property Sales (Kaggle)](https://www.kaggle.com/datasets/new-york-city/nyc-property-sales)
+
+---
+
 ## Conclusion & Insights
 
 ### 1. The Linearity Spectrum
