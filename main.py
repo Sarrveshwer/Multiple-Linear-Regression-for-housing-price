@@ -126,9 +126,9 @@ class LinearRegressionModel:
         if not os.path.exists(self.dataset_folder): os.makedirs(self.dataset_folder)
             
         self.df = pd.read_csv(filename).drop_duplicates()
-        if len(self.df) > 1000000:
-            print("Dataset too large, sampling 1,000,000 rows...")
-            self.df = self.df.sample(n=1000000, random_state=42).reset_index(drop=True)
+        if len(self.df) > 2000000:
+            print("Dataset too large, sampling 2,000,000 rows...")
+            self.df = self.df.sample(n=2000000, random_state=42).reset_index(drop=True)
 
         actual_col = [col for col in self.df.columns if column.lower() in col.lower()][0]
         if self.df[actual_col].dtype == 'object':

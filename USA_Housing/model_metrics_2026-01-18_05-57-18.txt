@@ -1,0 +1,15 @@
+Timestamp: 2026-01-18 05:57:18.623983
+Dataset: USA_Housing.csv
+Bin: Mid-Tier
+------------------------------
+R-Value: 0.6376
+R-Squared: 0.4066
+Final MSE: 0.595549
+Best Epoch: 475
+
+Feature Importances (Standardized Beta Weights):
+  Area Population: 0.7712
+  Avg. Area House Age: 0.8228
+  Avg. Area Income: 0.9791
+  Avg. Area Number of Bedrooms: 0.0035
+  Avg. Area Number of Rooms: 0.6476
