@@ -4,8 +4,6 @@
 
 ## Introduction    
 
-
-
 This project implements a custom **Multivariate Linear Regression** model from scratch to predict housing prices across multiple global datasets (USA, King County, Realtor Data, and NYC). By utilizing a gradient descent approach with feature scaling and market segmentation, the script determines how various socioeconomic and structural factors impact real estate value.
 
 The implementation focuses on the mathematical foundations of machine learning, intentionally avoiding high-level libraries like Scikit-Learn for the model logic itself to better understand optimization, convergence mechanics, and market tiers.
