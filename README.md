@@ -333,4 +333,4 @@ Average houses (Mid-Tier) were the hardest to predict.
 *   Expensive houses follow simple rules.
 *   **Middle houses are chaotic.** Buyers in this range are very picky and have too many choices, so their behavior is not linear at all. Code basically struggled here.
 
-**Final Verdict:** The code works perfectly on fake data, so math is correct. But **Real-World Housing is NOT Linear.** To get better accuracy, I need to use some advanced math that can understand "market soul", because simple lines cannot explain real estate market completely.
+**Final Verdict:** The code works perfectly on fake data, so math is correct. But **Real-World Housing is NOT Linear.** To get better accuracy, I need to use some advanced models that can understand "market trends", because simple lines cannot explain real estate market completely.
