@@ -388,9 +388,3 @@ if __name__ == "__main__":
 
     Model1=LinearRegressionModel()
     Model1.run_with_binning('kc_house_data.csv','price', ['id', 'date', 'sqft_living15', 'zipcode'])
-    
-    Model3=LinearRegressionModel()
-    Model3.run_with_binning('realtor-data.csv','price', ['status', 'street', 'city', 'state', 'prev_sold_date'])
-    
-    Model4=LinearRegressionModel()
-    Model4.run_with_binning('nyc-rolling-sales.csv','SALE PRICE', ['id', 'date', 'zipcode', 'Unnamed: 0'])
