@@ -17,6 +17,13 @@ sns.set_style('ticks')
 
 real_input = input
 
+'''
+This is what the below code does,
+It hijacks the output that would normally go to the console and
+intercepts it through a custom stdout object, so the same output
+can be written to a log file (with a timestamp added at the start
+of each line) and also sent to the console for printing.
+'''
 class Logger(object):
     def __init__(self, filename):
         self.terminal = sys.stdout
@@ -68,6 +75,10 @@ else:
 
 sys.stdout = Logger(log_path)
 
+
+'''
+An extension of the logger class to include 
+'''
 def input_and_log(prompt=""):
     print(prompt, end="", flush=True)
     answer = real_input()
@@ -92,6 +103,10 @@ def handle_exception(exc_type, exc_value, exc_traceback):
 
 sys.excepthook = handle_exception
 
+'''
+This Class is basically the entire LinearRegression model coded
+from scratch using th mathematical formula
+'''
 class LinearRegressionModel:
     def __init__(self):
         self.df=None
@@ -148,8 +163,8 @@ class LinearRegressionModel:
     def gradient_descent_engine(self, X_scaled, y_scaled, max_epochs, val_data=None):
         m = len(y_scaled)
         if m == 0: return np.ones((X_scaled.shape[1] + 1, 1)), [], 0
-        Xb = np.c_[np.ones(m), X_scaled].astype('float32')
-        theta = np.ones((Xb.shape[1], 1), dtype='float32')
+        Xb = np.c_[np.ones(m), X_scaled].astype('float64')
+        theta = np.ones((Xb.shape[1], 1), dtype='float64')
         
         initial_alpha = 0.01  
         decay = 0.001 
